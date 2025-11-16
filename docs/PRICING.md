@@ -1,5 +1,5 @@
 # Pricing Strategy
-## Form Builder SaaS (Cloudflare Workers Edition)
+## FormWeaver SaaS (Cloudflare Workers Edition)
 
 **Last Updated:** 2025-11-16  
 **Currency:** USD  
@@ -70,7 +70,7 @@
 - All 12 standard field types
 - Basic analytics (last 30 days)
 - Community support (Discord)
-- "Powered by FormBuilder" badge
+- "Powered by FormWeaver" badge
 - **Served from Cloudflare edge (300+ locations)**
 - **<50ms global latency**
 
@@ -425,7 +425,7 @@ This is a key differentiator from competitors (e.g., OpenAI expires after 1 year
 - **OpenAI:** Credits expire after 1 year, non-refundable
 - **Mailchimp:** Email credits never expire
 - **AWS:** Pay-as-you-go with no credits (post-paid)
-- **FormBuilder (us):** Credits never expire ✅
+- **FormWeaver (us):** Credits never expire ✅
 
 ### 5.5 Credit Refund Policy
 
@@ -455,7 +455,7 @@ This is a key differentiator from competitors (e.g., OpenAI expires after 1 year
 
 **Usage Summary (Weekly Email):**
 ```
-Subject: Your FormBuilder usage this week
+Subject: Your FormWeaver usage this week
 
 Forms created: 3 (12 credits remaining)
 Submissions received: 145 (1,855 credits remaining)
@@ -508,7 +508,7 @@ Total spent: $25 (initial) + $25 (top-up) = $50
 **For Element Creators:**
 - List custom elements on marketplace
 - Set your own price: $5-200 per element
-- **FormBuilder takes 20% commission**
+- **FormWeaver takes 20% commission**
 - **Creator receives 80%** (paid monthly via Stripe Connect)
 
 **Pricing Examples:**
@@ -525,7 +525,7 @@ Total spent: $25 (initial) + $25 (top-up) = $50
 
 ### 7.2 Subscription Elements (Phase 3)
 - Charge users monthly for access (e.g., $5/mo for premium widgets)
-- FormBuilder takes 20% of subscription revenue
+- FormWeaver takes 20% of subscription revenue
 - Automatic billing and access management via D1 + Stripe
 
 **Example:**
@@ -533,7 +533,7 @@ Total spent: $25 (initial) + $25 (top-up) = $50
 Creator lists "AI Form Analyzer" at $10/mo
 User subscribes → $10 charged monthly
 Creator earns: $8/mo (80%)
-FormBuilder earns: $2/mo (20%)
+FormWeaver earns: $2/mo (20%)
 ```
 
 ---
@@ -589,7 +589,7 @@ User buys $100 in credits
 
 ### 9.1 Competitor Analysis
 
-| Feature | FormBuilder (Prepaid) | FormBuilder (Pro) | Typeform (Basic) | Jotform (Bronze) | Tally (Pro) |
+| Feature | FormWeaver (Prepaid) | FormWeaver (Pro) | Typeform (Basic) | Jotform (Bronze) | Tally (Pro) |
 |---------|----------------------|-------------------|------------------|------------------|-------------|
 | **Price** | $10-200 (credits) | $29/mo | $29/mo | $34/mo | $29/mo |
 | **Model** | Pay-as-you-go | Subscription | Subscription | Subscription | Subscription |
@@ -607,7 +607,7 @@ User buys $100 in credits
 - **vs Typeform:** 10x more submissions, API access, faster globally
 - **vs Jotform:** Pay-as-you-go option, modern UI, edge performance
 - **vs Tally:** More enterprise features, better for SaaS embedding
-- **Unique:** Only form builder with non-expiring prepaid credits + edge performance
+- **Unique:** Only FormWeaver with non-expiring prepaid credits + edge performance
 
 ---
 
@@ -1042,8 +1042,8 @@ A: Credit/debit cards, PayPal, Apple Pay, Google Pay, and ACH/wire transfer for 
 **Q: Is there a setup fee?**  
 A: No setup fees for Free, Prepaid, Pro, or Business plans. Enterprise plans may include implementation fees.
 
-**Q: Why is FormBuilder faster than competitors?**  
-A: We're built on Cloudflare's global edge network with 300+ locations worldwide, delivering <50ms latency anywhere. Traditional form builders run on centralized servers with 150-300ms latency.
+**Q: Why is FormWeaver faster than competitors?**  
+A: We're built on Cloudflare's global edge network with 300+ locations worldwide, delivering <50ms latency anywhere. Traditional FormWeavers run on centralized servers with 150-300ms latency.
 
 **Q: What's included in the free tier?**  
 A: 3 forms, 100 submissions/month, 100MB storage, basic analytics, community support, and access to all standard field types.
@@ -1135,7 +1135,7 @@ Alternative: Business ($99/mo)
 
 **At-Risk Customer (Low Usage):**
 - If Pro user creates <5 forms/month for 2 months
-- Message: "Not using FormBuilder much? Switch to Prepaid and save."
+- Message: "Not using FormWeaver much? Switch to Prepaid and save."
 - Offer: Downgrade to Prepaid, refund prorated amount
 
 **Churn Prevention:**
@@ -1171,7 +1171,7 @@ Alternative: Business ($99/mo)
 
 **For** SaaS developers and growing businesses  
 **Who** need fast, embeddable forms with flexible pricing  
-**FormBuilder** is a form builder  
+**FormWeaver** is a FormWeaver  
 **That** delivers <50ms global latency and pays-as-you-grow pricing  
 **Unlike** Typeform, Jotform, and Google Forms  
 **We** offer edge performance + prepaid flexibility + unlimited extensibility
@@ -1281,7 +1281,7 @@ April 1: Pro plan increases from $29 to $39
 
 ```
 ┌─────────────────────────────────────────────────┐
-│  FormBuilder Pricing Dashboard - Nov 2026      │
+│  FormWeaver Pricing Dashboard - Nov 2026      │
 ├─────────────────────────────────────────────────┤
 │  Total Customers: 8,000                         │
 │  ├─ Free: 5,500 (69%)                          │

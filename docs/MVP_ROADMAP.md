@@ -1,8 +1,8 @@
 # MVP Roadmap
-## Form Builder SaaS - Weeks 1-4
+## FormWeaver SaaS - Weeks 1-4
 ### Cloudflare Workers + Hono Backend
 
-**Goal:** Launch a functional, embeddable form builder that delivers core value  
+**Goal:** Launch a functional, embeddable FormWeaver that delivers core value  
 **Success Criteria:** 100 signups, 50 forms created, 10 paying customers
 
 ---
@@ -226,7 +226,7 @@ GET    /forms/:id/submissions/export
 ### JavaScript SDK (Vanilla)
 - [ ] Build SDK library
 - [ ] API client for Hono backend
-  - [ ] `FormBuilder.render(config)`
+  - [ ] `FormWeaver.render(config)`
   - [ ] Fetch form schema: GET `/f/:formId`
   - [ ] Submit form: POST `/f/:formId/submit`
 - [ ] Configuration options:
@@ -307,7 +307,7 @@ POST   /webhooks/stripe
 GET    /billing/subscription
 POST   /billing/create-checkout-session
 POST   /billing/create-portal-session
-GET    /sdk/formbuilder.min.js (serve SDK)
+GET    /sdk/FormWeaver.min.js (serve SDK)
 ```
 
 **Testing:**
@@ -360,7 +360,7 @@ GET    /sdk/formbuilder.min.js (serve SDK)
 - [ ] Set up Cloudflare Analytics
 - [ ] Configure custom domain on Cloudflare
 - [ ] Set up Workers monitoring (alerts)
-- [ ] Create support email (support@formbuilder.app)
+- [ ] Create support email (support@FormWeaver.app)
 - [ ] Write launch blog post (host on Workers)
 - [ ] Prepare social media posts
 - [ ] Email 20 beta testers for feedback
@@ -541,7 +541,7 @@ GET    /sdk/formbuilder.min.js (serve SDK)
 **Hono Docs:** https://hono.dev  
 **D1 Docs:** https://developers.cloudflare.com/d1  
 **Project Board:** GitHub Projects  
-**Roadmap:** Public roadmap.formbuilder.app  
+**Roadmap:** Public roadmap.FormWeaver.app  
 **Slack:** #engineering channel  
 **Meetings:** Daily standup at 10am, Weekly review Friday 4pm  
 
@@ -550,9 +550,9 @@ GET    /sdk/formbuilder.min.js (serve SDK)
 **Next Step:** Initialize Wrangler project and set up Hono! 🚀
 
 ```bash
-npm create cloudflare@latest my-form-builder
-cd my-form-builder
+npm create cloudflare@latest my-formweaver
+cd my-formweaver
 npm install hono
-wrangler d1 create form-builder-db
+wrangler d1 create formweaver-db
 wrangler dev
 ```

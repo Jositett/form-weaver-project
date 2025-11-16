@@ -1,5 +1,5 @@
 # Product Requirements Document (PRD)
-## Form Builder SaaS (Cloudflare Workers Edition)
+## FormWeaver SaaS (Cloudflare Workers Edition)
 
 **Version:** 2.0  
 **Last Updated:** 2025-11-16  
@@ -12,7 +12,7 @@
 ## 1. Executive Summary
 
 ### 1.1 Product Vision
-A powerful, embeddable form builder built on Cloudflare's global edge network, allowing SaaS companies and developers to integrate a no-code form creation tool directly into their applications with <50ms latency worldwide. Users can design forms with drag-and-drop, collect responses, and extend functionality with custom input elements.
+A powerful, embeddable FormWeaver built on Cloudflare's global edge network, allowing SaaS companies and developers to integrate a no-code form creation tool directly into their applications with <50ms latency worldwide. Users can design forms with drag-and-drop, collect responses, and extend functionality with custom input elements.
 
 ### 1.2 Target Users
 - **Primary:** SaaS developers who need form building capabilities in their apps
@@ -418,7 +418,7 @@ await env.RATE_LIMIT.put(key, String((parseInt(count || '0') + 1)), {
 #### Method 1: iframe Embed
 ```html
 <iframe 
-  src="https://forms.formbuilder.app/f/form_abc123?theme=dark"
+  src="https://forms.FormWeaver.app/f/form_abc123?theme=dark"
   width="100%"
   height="600"
   frameborder="0"
@@ -431,13 +431,13 @@ await env.RATE_LIMIT.put(key, String((parseInt(count || '0') + 1)), {
 
 #### Method 2: JavaScript SDK
 ```html
-<script src="https://cdn.formbuilder.app/sdk.min.js"></script>
+<script src="https://cdn.FormWeaver.app/sdk.min.js"></script>
 <div id="form-container"></div>
 <script>
-  FormBuilder.render({
+  FormWeaver.render({
     formId: 'form_abc123',
     container: '#form-container',
-    apiUrl: 'https://api.formbuilder.app/v1', // Workers endpoint
+    apiUrl: 'https://api.FormWeaver.app/v1', // Workers endpoint
     onSubmit: (data) => console.log(data),
     theme: 'light'
   });
@@ -448,19 +448,19 @@ await env.RATE_LIMIT.put(key, String((parseInt(count || '0') + 1)), {
 
 #### Method 3: React Component
 ```jsx
-import { FormBuilderEmbed } from '@formbuilder/react';
+import { FormWeaverEmbed } from '@FormWeaver/react';
 
-<FormBuilderEmbed 
+<FormWeaverEmbed 
   formId="form_abc123"
   apiKey="pk_live_..."
-  apiUrl="https://api.formbuilder.app/v1"
+  apiUrl="https://api.FormWeaver.app/v1"
   onSubmit={(data) => handleSubmit(data)}
 />
 ```
 
 ### 4.2 White-Label Options
 - Custom domain (forms.yourdomain.com) - Via Cloudflare Workers custom domains
-- Remove "Powered by FormBuilder" badge
+- Remove "Powered by FormWeaver" badge
 - Custom loading screens
 - Custom error messages
 - Custom CSS injection
@@ -675,7 +675,7 @@ See `docs/PRICING.md` for detailed pricing tiers.
 ### 10.2 User Personas
 
 **Persona 1: SaaS Founder (Alex)**
-- Needs form builder for customer feedback in SaaS app
+- Needs FormWeaver for customer feedback in SaaS app
 - Wants white-label solution with fast loading
 - Budget: $50-200/month
 - Technical: Can integrate via API

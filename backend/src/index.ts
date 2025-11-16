@@ -37,7 +37,7 @@ app.use('/api/*', cors({
 app.get('/', (c) => {
   return c.json({
     status: 'ok',
-    message: 'FormBuilder API - Cloudflare Workers + Hono',
+    message: 'FormWeaver API - Cloudflare Workers + Hono',
     version: '1.0.0',
     environment: c.env.ENVIRONMENT,
   });

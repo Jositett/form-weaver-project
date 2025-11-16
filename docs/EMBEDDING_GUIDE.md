@@ -1,22 +1,22 @@
 # Embedding Guide
-## Form Builder SaaS Integration (Cloudflare Workers Edition)
+## FormWeaver SaaS Integration (Cloudflare Workers Edition)
 
 **Version:** 2.0  
 **Last Updated:** 2025-11-16  
-**Audience:** Developers integrating FormBuilder into their applications
+**Audience:** Developers integrating FormWeaver into their applications
 
 ---
 
 ## 1. Overview
 
-This guide covers all methods for embedding FormBuilder forms into your website or application. Our forms are powered by Cloudflare Workers for ultra-fast global performance with <50ms latency worldwide.
+This guide covers all methods for embedding FormWeaver forms into your website or application. Our forms are powered by Cloudflare Workers for ultra-fast global performance with <50ms latency worldwide.
 
 ---
 
 ## 2. Quick Start (5 Minutes)
 
 ### 2.1 Get Your Form ID
-1. Log in to [formbuilder.app](https://formbuilder.app)
+1. Log in to [FormWeaver.app](https://FormWeaver.app)
 2. Navigate to your form
 3. Click "Share" → Copy Form ID (e.g., `form_abc123xyz`)
 
@@ -34,7 +34,7 @@ This guide covers all methods for embedding FormBuilder forms into your website 
 ### 3.1 Basic iframe
 ```html
 <iframe 
-  src="https://forms.formbuilder.app/f/form_abc123xyz"
+  src="https://forms.FormWeaver.app/f/form_abc123xyz"
   width="100%"
   height="600"
   frameborder="0"
@@ -45,7 +45,7 @@ This guide covers all methods for embedding FormBuilder forms into your website 
 ### 3.2 With Options
 ```html
 <iframe 
-  src="https://forms.formbuilder.app/f/form_abc123xyz?theme=dark&hideHeader=true"
+  src="https://forms.FormWeaver.app/f/form_abc123xyz?theme=dark&hideHeader=true"
   width="100%"
   height="600"
   frameborder="0"
@@ -66,7 +66,7 @@ This guide covers all methods for embedding FormBuilder forms into your website 
 **Example with prefill:**
 ```html
 <iframe 
-  src="https://forms.formbuilder.app/f/form_abc123xyz?prefill=%7B%22email%22%3A%22user%40example.com%22%7D"
+  src="https://forms.FormWeaver.app/f/form_abc123xyz?prefill=%7B%22email%22%3A%22user%40example.com%22%7D"
   width="100%"
   height="600"
 ></iframe>
@@ -91,27 +91,27 @@ This guide covers all methods for embedding FormBuilder forms into your website 
 </style>
 
 <div class="form-container">
-  <iframe src="https://forms.formbuilder.app/f/form_abc123xyz"></iframe>
+  <iframe src="https://forms.FormWeaver.app/f/form_abc123xyz"></iframe>
 </div>
 ```
 
 ### 3.4 Auto-Resize iframe
 ```html
-<script src="https://cdn.formbuilder.app/iframe-resizer.min.js"></script>
+<script src="https://cdn.FormWeaver.app/iframe-resizer.min.js"></script>
 <iframe 
   id="form-iframe"
-  src="https://forms.formbuilder.app/f/form_abc123xyz"
+  src="https://forms.FormWeaver.app/f/form_abc123xyz"
   width="100%"
 ></iframe>
 
 <script>
-  FormBuilderIframeResizer.resize('#form-iframe');
+  FormWeaverIframeResizer.resize('#form-iframe');
   
   // Listen for form events
   window.addEventListener('message', (event) => {
-    if (event.origin !== 'https://forms.formbuilder.app') return;
+    if (event.origin !== 'https://forms.FormWeaver.app') return;
     
-    if (event.data.type === 'formbuilder:submit') {
+    if (event.data.type === 'FormWeaver:submit') {
       console.log('Form submitted:', event.data.payload);
     }
   });
@@ -126,14 +126,14 @@ This guide covers all methods for embedding FormBuilder forms into your website 
 
 **CDN (no build step) - Served from Cloudflare:**
 ```html
-<script src="https://cdn.formbuilder.app/sdk@2.0.0.min.js"></script>
+<script src="https://cdn.FormWeaver.app/sdk@2.0.0.min.js"></script>
 <!-- Or use latest: -->
-<script src="https://cdn.formbuilder.app/sdk.min.js"></script>
+<script src="https://cdn.FormWeaver.app/sdk.min.js"></script>
 ```
 
 **NPM (for bundlers):**
 ```bash
-npm install @formbuilder/sdk
+npm install @FormWeaver/sdk
 ```
 
 ### 4.2 Basic Usage
@@ -141,13 +141,13 @@ npm install @formbuilder/sdk
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="https://cdn.formbuilder.app/sdk.min.js"></script>
+  <script src="https://cdn.FormWeaver.app/sdk.min.js"></script>
 </head>
 <body>
   <div id="form-container"></div>
 
   <script>
-    FormBuilder.render({
+    FormWeaver.render({
       formId: 'form_abc123xyz',
       container: '#form-container',
       apiKey: 'pk_live_...', // Optional for public forms
@@ -165,13 +165,13 @@ npm install @formbuilder/sdk
 
 ### 4.3 With Options
 ```javascript
-FormBuilder.render({
+FormWeaver.render({
   formId: 'form_abc123xyz',
   container: '#form-container',
   apiKey: 'pk_live_...', // Get from dashboard
   
   // API Configuration (Cloudflare Workers endpoint)
-  apiUrl: 'https://api.formbuilder.app/v1', // Default
+  apiUrl: 'https://api.FormWeaver.app/v1', // Default
   
   // Styling
   theme: 'dark',
@@ -211,7 +211,7 @@ FormBuilder.render({
 // Example: yoursite.com?email=user@example.com&name=John&utm_source=twitter
 const urlParams = new URLSearchParams(window.location.search);
 
-FormBuilder.render({
+FormWeaver.render({
   formId: 'form_abc123xyz',
   container: '#form-container',
   initialValues: {
@@ -226,7 +226,7 @@ FormBuilder.render({
 
 ### 4.5 Programmatic Control
 ```javascript
-const form = FormBuilder.render({ 
+const form = FormWeaver.render({ 
   formId: 'form_abc123xyz', 
   container: '#app' 
 });
@@ -272,7 +272,7 @@ form.destroy();
 
 ### 4.6 Error Handling
 ```javascript
-FormBuilder.render({
+FormWeaver.render({
   formId: 'form_abc123xyz',
   container: '#app',
   onError: (error) => {
@@ -303,17 +303,17 @@ FormBuilder.render({
 
 ### 5.1 Installation
 ```bash
-npm install @formbuilder/react
+npm install @FormWeaver/react
 ```
 
 ### 5.2 Basic Usage
 ```tsx
-import { FormBuilderEmbed } from '@formbuilder/react';
+import { FormWeaverEmbed } from '@FormWeaver/react';
 
 function ContactPage() {
   return (
     <div className="container">
-      <FormBuilderEmbed 
+      <FormWeaverEmbed 
         formId="form_abc123xyz"
         apiKey="pk_live_..."
       />
@@ -324,7 +324,7 @@ function ContactPage() {
 
 ### 5.3 With TypeScript + Options
 ```tsx
-import { FormBuilderEmbed, FormSubmission } from '@formbuilder/react';
+import { FormWeaverEmbed, FormSubmission } from '@FormWeaver/react';
 
 interface ContactFormData {
   name: string;
@@ -353,10 +353,10 @@ function ContactPage() {
   };
 
   return (
-    <FormBuilderEmbed<ContactFormData>
+    <FormWeaverEmbed<ContactFormData>
       formId="form_abc123xyz"
-      apiKey={process.env.NEXT_PUBLIC_FORMBUILDER_API_KEY}
-      apiUrl="https://api.formbuilder.app/v1" // Cloudflare Workers endpoint
+      apiKey={process.env.NEXT_PUBLIC_FormWeaver_API_KEY}
+      apiUrl="https://api.FormWeaver.app/v1" // Cloudflare Workers endpoint
       theme="dark"
       onSubmit={handleSubmit}
       onError={(error) => console.error(error)}
@@ -373,7 +373,7 @@ function ContactPage() {
 
 ### 5.4 Using Hooks
 ```tsx
-import { useFormBuilder } from '@formbuilder/react';
+import { useFormWeaver } from '@FormWeaver/react';
 
 function CustomForm() {
   const { 
@@ -384,10 +384,10 @@ function CustomForm() {
     submitForm,
     setFieldValue,
     validateField 
-  } = useFormBuilder({
+  } = useFormWeaver({
     formId: 'form_abc123xyz',
     apiKey: 'pk_live_...',
-    apiUrl: 'https://api.formbuilder.app/v1'
+    apiUrl: 'https://api.FormWeaver.app/v1'
   });
 
   if (isLoading) return <div>Loading form...</div>;
@@ -440,7 +440,7 @@ function CustomForm() {
 // app/contact/page.tsx
 'use client';
 
-import { FormBuilderEmbed } from '@formbuilder/react';
+import { FormWeaverEmbed } from '@FormWeaver/react';
 import { useRouter } from 'next/navigation';
 
 export default function ContactPage() {
@@ -450,10 +450,10 @@ export default function ContactPage() {
     <main className="container mx-auto py-12">
       <h1 className="text-4xl font-bold mb-8">Contact Us</h1>
       
-      <FormBuilderEmbed 
+      <FormWeaverEmbed 
         formId={process.env.NEXT_PUBLIC_FORM_ID!}
-        apiKey={process.env.NEXT_PUBLIC_FORMBUILDER_API_KEY!}
-        apiUrl="https://api.formbuilder.app/v1"
+        apiKey={process.env.NEXT_PUBLIC_FormWeaver_API_KEY!}
+        apiUrl="https://api.FormWeaver.app/v1"
         onSubmit={async (data) => {
           // Send to your API route (optional)
           await fetch('/api/contact', {
@@ -483,7 +483,7 @@ export default async function ContactPage() {
   // Fetch initial data on server if needed
   const formConfig = {
     formId: process.env.FORM_ID!,
-    apiKey: process.env.NEXT_PUBLIC_FORMBUILDER_API_KEY!,
+    apiKey: process.env.NEXT_PUBLIC_FormWeaver_API_KEY!,
   };
   
   return (
@@ -497,10 +497,10 @@ export default async function ContactPage() {
 // app/contact/ContactForm.tsx (Client Component)
 'use client';
 
-import { FormBuilderEmbed } from '@formbuilder/react';
+import { FormWeaverEmbed } from '@FormWeaver/react';
 
 export function ContactForm({ config }: { config: any }) {
-  return <FormBuilderEmbed {...config} />;
+  return <FormWeaverEmbed {...config} />;
 }
 ```
 
@@ -510,14 +510,14 @@ export function ContactForm({ config }: { config: any }) {
 
 ### 6.1 Installation
 ```bash
-npm install @formbuilder/vue
+npm install @FormWeaver/vue
 ```
 
 ### 6.2 Basic Usage (Composition API)
 ```vue
 <template>
   <div class="contact-page">
-    <FormBuilderEmbed 
+    <FormWeaverEmbed 
       :form-id="formId"
       :api-key="apiKey"
       :api-url="apiUrl"
@@ -528,11 +528,11 @@ npm install @formbuilder/vue
 </template>
 
 <script setup lang="ts">
-import { FormBuilderEmbed } from '@formbuilder/vue';
+import { FormWeaverEmbed } from '@FormWeaver/vue';
 
 const formId = 'form_abc123xyz';
-const apiKey = import.meta.env.VITE_FORMBUILDER_API_KEY;
-const apiUrl = 'https://api.formbuilder.app/v1';
+const apiKey = import.meta.env.VITE_FormWeaver_API_KEY;
+const apiUrl = 'https://api.FormWeaver.app/v1';
 
 const handleSubmit = (data: any) => {
   console.log('Submitted:', data);
@@ -577,7 +577,7 @@ const handleError = (error: any) => {
 </template>
 
 <script setup lang="ts">
-import { useFormBuilder } from '@formbuilder/vue';
+import { useFormWeaver } from '@FormWeaver/vue';
 
 const { 
   formData, 
@@ -587,10 +587,10 @@ const {
   isSubmitting,
   submitForm, 
   setFieldValue 
-} = useFormBuilder({
+} = useFormWeaver({
   formId: 'form_abc123xyz',
-  apiKey: import.meta.env.VITE_FORMBUILDER_API_KEY,
-  apiUrl: 'https://api.formbuilder.app/v1'
+  apiKey: import.meta.env.VITE_FormWeaver_API_KEY,
+  apiUrl: 'https://api.FormWeaver.app/v1'
 });
 </script>
 ```
@@ -602,9 +602,9 @@ const {
   <div class="container">
     <h1>Contact Us</h1>
     <ClientOnly>
-      <FormBuilderEmbed 
+      <FormWeaverEmbed 
         :form-id="formId"
-        :api-key="config.public.formbuilderApiKey"
+        :api-key="config.public.FormWeaverApiKey"
         @submit="handleSubmit"
       />
     </ClientOnly>
@@ -612,7 +612,7 @@ const {
 </template>
 
 <script setup lang="ts">
-import { FormBuilderEmbed } from '@formbuilder/vue';
+import { FormWeaverEmbed } from '@FormWeaver/vue';
 
 const config = useRuntimeConfig();
 const formId = 'form_abc123xyz';
@@ -637,7 +637,7 @@ const handleSubmit = async (data: any) => {
 ### 7.1 Fetch Form Schema
 ```javascript
 const response = await fetch(
-  'https://api.formbuilder.app/v1/forms/form_abc123xyz',
+  'https://api.FormWeaver.app/v1/forms/form_abc123xyz',
   {
     headers: {
       'Authorization': `Bearer ${apiKey}`,
@@ -701,7 +701,7 @@ console.log(formSchema);
 ### 7.2 Submit Form Data
 ```javascript
 const submission = await fetch(
-  'https://api.formbuilder.app/v1/f/form_abc123xyz/submit',
+  'https://api.FormWeaver.app/v1/f/form_abc123xyz/submit',
   {
     method: 'POST',
     headers: {
@@ -803,7 +803,7 @@ if (errors) {
 ### 7.4 Fetch Submissions (Authenticated)
 ```javascript
 const response = await fetch(
-  'https://api.formbuilder.app/v1/forms/form_abc123xyz/submissions?page=1&limit=50',
+  'https://api.FormWeaver.app/v1/forms/form_abc123xyz/submissions?page=1&limit=50',
   {
     headers: {
       'Authorization': `Bearer ${apiKey}` // Requires authenticated API key
@@ -836,8 +836,8 @@ const app = express();
 
 app.post('/api/form-webhook', express.raw({ type: 'application/json' }), (req, res) => {
   // Verify webhook signature (IMPORTANT!)
-  const signature = req.headers['x-formbuilder-signature'];
-  const timestamp = req.headers['x-formbuilder-timestamp'];
+  const signature = req.headers['x-FormWeaver-signature'];
+  const timestamp = req.headers['x-FormWeaver-timestamp'];
   
   if (!verifyWebhookSignature(signature, timestamp, req.body)) {
     console.error('Invalid webhook signature');
@@ -869,7 +869,7 @@ app.post('/api/form-webhook', express.raw({ type: 'application/json' }), (req, r
 });
 
 function verifyWebhookSignature(signature, timestamp, rawBody) {
-  const secret = process.env.FORMBUILDER_WEBHOOK_SECRET;
+  const secret = process.env.FormWeaver_WEBHOOK_SECRET;
   
   // Prevent replay attacks (reject if >5 minutes old)
   const age = Date.now() - parseInt(timestamp);
@@ -912,14 +912,14 @@ async function handleNewSubmission(data) {
 
 ### 8.3 Handle Webhook (Cloudflare Workers)
 ```typescript
-// api/webhooks/formbuilder.ts
+// api/webhooks/FormWeaver.ts
 import { Hono } from 'hono';
 
 const app = new Hono();
 
-app.post('/webhooks/formbuilder', async (c) => {
-  const signature = c.req.header('x-formbuilder-signature');
-  const timestamp = c.req.header('x-formbuilder-timestamp');
+app.post('/webhooks/FormWeaver', async (c) => {
+  const signature = c.req.header('x-FormWeaver-signature');
+  const timestamp = c.req.header('x-FormWeaver-timestamp');
   const rawBody = await c.req.text();
   
   // Verify signature
@@ -927,7 +927,7 @@ app.post('/webhooks/formbuilder', async (c) => {
     signature,
     timestamp,
     rawBody,
-    c.env.FORMBUILDER_WEBHOOK_SECRET
+    c.env.FormWeaver_WEBHOOK_SECRET
   );
   
   if (!isValid) {
@@ -1020,7 +1020,7 @@ Monitor failed webhooks in dashboard → Settings → Webhooks → Failed Delive
 
 ### 9.1 CSS Injection (JavaScript SDK)
 ```javascript
-FormBuilder.render({
+FormWeaver.render({
   formId: 'form_abc123xyz',
   container: '#app',
   customCSS: `
@@ -1069,52 +1069,52 @@ FormBuilder.render({
 ```css
 :root {
   /* Colors */
-  --formbuilder-primary: #3B82F6;
-  --formbuilder-primary-hover: #2563EB;
-  --formbuilder-text: #1F2937;
-  --formbuilder-text-muted: #6B7280;
-  --formbuilder-bg: #FFFFFF;
-  --formbuilder-bg-secondary: #F9FAFB;
-  --formbuilder-border: #E5E7EB;
-  --formbuilder-error: #EF4444;
-  --formbuilder-success: #10B981;
+  --FormWeaver-primary: #3B82F6;
+  --FormWeaver-primary-hover: #2563EB;
+  --FormWeaver-text: #1F2937;
+  --FormWeaver-text-muted: #6B7280;
+  --FormWeaver-bg: #FFFFFF;
+  --FormWeaver-bg-secondary: #F9FAFB;
+  --FormWeaver-border: #E5E7EB;
+  --FormWeaver-error: #EF4444;
+  --FormWeaver-success: #10B981;
   
   /* Typography */
-  --formbuilder-font-family: 'Inter', -apple-system, sans-serif;
-  --formbuilder-font-size-sm: 14px;
-  --formbuilder-font-size-base: 16px;
-  --formbuilder-font-size-lg: 18px;
+  --FormWeaver-font-family: 'Inter', -apple-system, sans-serif;
+  --FormWeaver-font-size-sm: 14px;
+  --FormWeaver-font-size-base: 16px;
+  --FormWeaver-font-size-lg: 18px;
   
   /* Spacing */
-  --formbuilder-spacing-sm: 8px;
-  --formbuilder-spacing-md: 16px;
-  --formbuilder-spacing-lg: 24px;
+  --FormWeaver-spacing-sm: 8px;
+  --FormWeaver-spacing-md: 16px;
+  --FormWeaver-spacing-lg: 24px;
   
   /* Border Radius */
-  --formbuilder-border-radius: 8px;
-  --formbuilder-border-radius-lg: 12px;
+  --FormWeaver-border-radius: 8px;
+  --FormWeaver-border-radius-lg: 12px;
   
   /* Shadows */
-  --formbuilder-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --formbuilder-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
-  --formbuilder-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --FormWeaver-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --FormWeaver-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --FormWeaver-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
   :root {
-    --formbuilder-text: #F9FAFB;
-    --formbuilder-text-muted: #9CA3AF;
-    --formbuilder-bg: #111827;
-    --formbuilder-bg-secondary: #1F2937;
-    --formbuilder-border: #374151;
+    --FormWeaver-text: #F9FAFB;
+    --FormWeaver-text-muted: #9CA3AF;
+    --FormWeaver-bg: #111827;
+    --FormWeaver-bg-secondary: #1F2937;
+    --FormWeaver-border: #374151;
   }
 }
 ```
 
 ### 9.3 Custom Classes
 ```javascript
-FormBuilder.render({
+FormWeaver.render({
   formId: 'form_abc123xyz',
   container: '#app',
   classNames: {
@@ -1138,9 +1138,9 @@ FormBuilder.render({
 
 <div id="form-container"></div>
 
-<script src="https://cdn.formbuilder.app/sdk.min.js"></script>
+<script src="https://cdn.FormWeaver.app/sdk.min.js"></script>
 <script>
-  FormBuilder.render({
+  FormWeaver.render({
     formId: 'form_abc123xyz',
     container: '#form-container',
     classNames: {
@@ -1164,10 +1164,10 @@ FormBuilder.render({
 **Public vs Private Keys:**
 ```javascript
 // ✅ GOOD: Use public key for client-side (pk_live_...)
-const apiKey = process.env.NEXT_PUBLIC_FORMBUILDER_API_KEY; // pk_live_xxx
+const apiKey = process.env.NEXT_PUBLIC_FormWeaver_API_KEY; // pk_live_xxx
 
 // ✅ GOOD: Use private key for server-side only (sk_live_...)
-const secretKey = process.env.FORMBUILDER_SECRET_KEY; // sk_live_xxx (NEVER expose to client!)
+const secretKey = process.env.FormWeaver_SECRET_KEY; // sk_live_xxx (NEVER expose to client!)
 
 // ❌ BAD: Hardcode in client-side code
 const apiKey = 'pk_live_abc123...'; // Exposed to users but OK for public keys
@@ -1177,17 +1177,17 @@ const secretKey = 'sk_live_xyz789...'; // NEVER DO THIS - exposed to users!
 **Environment Variables:**
 ```bash
 # .env.local (Next.js)
-NEXT_PUBLIC_FORMBUILDER_API_KEY=pk_live_xxx # Exposed to client
-FORMBUILDER_SECRET_KEY=sk_live_xxx # Server-side only
+NEXT_PUBLIC_FormWeaver_API_KEY=pk_live_xxx # Exposed to client
+FormWeaver_SECRET_KEY=sk_live_xxx # Server-side only
 
 # .env (Vite)
-VITE_FORMBUILDER_API_KEY=pk_live_xxx # Exposed to client
-FORMBUILDER_SECRET_KEY=sk_live_xxx # Server-side only
+VITE_FormWeaver_API_KEY=pk_live_xxx # Exposed to client
+FormWeaver_SECRET_KEY=sk_live_xxx # Server-side only
 ```
 
 ### 10.2 CORS Configuration
 
-In FormBuilder dashboard:
+In FormWeaver dashboard:
 1. Go to Settings → Security → CORS
 2. Add allowed domains:
    - `https://yoursite.com`
@@ -1209,7 +1209,7 @@ In FormBuilder dashboard:
 **Monitor Usage:**
 ```javascript
 // Check rate limit headers in response
-const response = await fetch('https://api.formbuilder.app/v1/f/form_abc123xyz/submit', {
+const response = await fetch('https://api.FormWeaver.app/v1/f/form_abc123xyz/submit', {
   method: 'POST',
   body: JSON.stringify(data)
 });
@@ -1227,7 +1227,7 @@ console.log('Reset:', response.headers.get('X-RateLimit-Reset'));
 
 **reCAPTCHA v3:**
 ```javascript
-FormBuilder.render({
+FormWeaver.render({
   formId: 'form_abc123xyz',
   container: '#app',
   captcha: {
@@ -1241,7 +1241,7 @@ FormBuilder.render({
 
 **hCaptcha:**
 ```javascript
-FormBuilder.render({
+FormWeaver.render({
   formId: 'form_abc123xyz',
   container: '#app',
   captcha: {
@@ -1253,7 +1253,7 @@ FormBuilder.render({
 
 **Cloudflare Turnstile (Recommended):**
 ```javascript
-FormBuilder.render({
+FormWeaver.render({
   formId: 'form_abc123xyz',
   container: '#app',
   captcha: {
@@ -1269,11 +1269,11 @@ FormBuilder.render({
 ```html
 <meta http-equiv="Content-Security-Policy" content="
   default-src 'self';
-  script-src 'self' https://cdn.formbuilder.app https://challenges.cloudflare.com;
-  connect-src 'self' https://api.formbuilder.app;
+  script-src 'self' https://cdn.FormWeaver.app https://challenges.cloudflare.com;
+  connect-src 'self' https://api.FormWeaver.app;
   img-src 'self' data: https:;
-  style-src 'self' 'unsafe-inline' https://cdn.formbuilder.app;
-  frame-src https://forms.formbuilder.app;
+  style-src 'self' 'unsafe-inline' https://cdn.FormWeaver.app;
+  frame-src https://forms.FormWeaver.app;
 ">
 ```
 
@@ -1283,7 +1283,7 @@ FormBuilder.render({
 
 ### 11.1 Google Analytics 4
 ```javascript
-FormBuilder.render({
+FormWeaver.render({
   formId: 'form_abc123xyz',
   container: '#app',
   onLoad: () => {
@@ -1313,7 +1313,7 @@ FormBuilder.render({
 
 ### 11.2 Plausible Analytics
 ```javascript
-FormBuilder.render({
+FormWeaver.render({
   formId: 'form_abc123xyz',
   container: '#app',
   onSubmit: (data) => {
@@ -1330,7 +1330,7 @@ FormBuilder.render({
 
 ### 11.3 Segment
 ```javascript
-FormBuilder.render({
+FormWeaver.render({
   formId: 'form_abc123xyz',
   container: '#app',
   onSubmit: (data) => {
@@ -1355,7 +1355,7 @@ FormBuilder.render({
 
 ### 11.4 Custom Events
 ```javascript
-FormBuilder.render({
+FormWeaver.render({
   formId: 'form_abc123xyz',
   container: '#app',
   onLoad: () => console.log('✅ Form loaded'),
@@ -1378,7 +1378,7 @@ FormBuilder.render({
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      loadFormBuilderSDK();
+      loadFormWeaverSDK();
       observer.disconnect();
     }
   });
@@ -1386,11 +1386,11 @@ const observer = new IntersectionObserver((entries) => {
 
 observer.observe(document.querySelector('#form-container'));
 
-function loadFormBuilderSDK() {
+function loadFormWeaverSDK() {
   const script = document.createElement('script');
-  script.src = 'https://cdn.formbuilder.app/sdk.min.js';
+  script.src = 'https://cdn.FormWeaver.app/sdk.min.js';
   script.onload = () => {
-    FormBuilder.render({
+    FormWeaver.render({
       formId: 'form_abc123xyz',
       container: '#form-container'
     });
@@ -1403,18 +1403,18 @@ function loadFormBuilderSDK() {
 ```html
 <head>
   <!-- Preconnect to Cloudflare Workers API -->
-  <link rel="preconnect" href="https://api.formbuilder.app">
-  <link rel="dns-prefetch" href="https://api.formbuilder.app">
+  <link rel="preconnect" href="https://api.FormWeaver.app">
+  <link rel="dns-prefetch" href="https://api.FormWeaver.app">
   
   <!-- Preload SDK (optional) -->
-  <link rel="preload" href="https://cdn.formbuilder.app/sdk.min.js" as="script">
+  <link rel="preload" href="https://cdn.FormWeaver.app/sdk.min.js" as="script">
 </head>
 ```
 
 ### 12.3 Cache Form Schema
 ```javascript
 // Cache form schema in localStorage for 5 minutes
-const CACHE_KEY = 'formbuilder_schema_form_abc123xyz';
+const CACHE_KEY = 'FormWeaver_schema_form_abc123xyz';
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
 async function getFormSchema(formId) {
@@ -1428,7 +1428,7 @@ async function getFormSchema(formId) {
   }
   
   // Fetch from API (served from Cloudflare edge cache)
-  const response = await fetch(`https://api.formbuilder.app/v1/forms/${formId}`);
+  const response = await fetch(`https://api.FormWeaver.app/v1/forms/${formId}`);
   const data = await response.json();
   
   // Cache it
@@ -1470,11 +1470,11 @@ CF-Cache-Status: HIT
 3. Check form status is "Published" (not Draft)
 4. Check CORS settings (Settings → Security → CORS)
 5. Open browser console for error messages
-6. Verify network requests in DevTools (should see requests to `api.formbuilder.app`)
+6. Verify network requests in DevTools (should see requests to `api.FormWeaver.app`)
 
 **Debug Mode:**
 ```javascript
-FormBuilder.render({
+FormWeaver.render({
   formId: 'form_abc123xyz',
   container: '#app',
   debug: true // Enables verbose console logging
@@ -1493,7 +1493,7 @@ FormBuilder.render({
 5. Check browser console for errors
 6. Test with API directly:
    ```bash
-   curl -X POST https://api.formbuilder.app/v1/f/form_abc123xyz/submit \
+   curl -X POST https://api.FormWeaver.app/v1/f/form_abc123xyz/submit \
      -H "Content-Type: application/json" \
      -d '{"data":{"field_1":"test"}}'
    ```
@@ -1545,7 +1545,7 @@ curl https://api.typeform.com/forms/FORM_ID/responses \
   -H "Authorization: Bearer YOUR_TOKEN" > typeform_export.json
 ```
 
-**Step 2: Create Form in FormBuilder**
+**Step 2: Create Form in FormWeaver**
 1. Recreate form structure matching Typeform fields
 2. Map field types:
    - Short Text → Text Input
@@ -1560,7 +1560,7 @@ curl https://api.typeform.com/forms/FORM_ID/responses \
 const typeformData = require('./typeform_export.json');
 
 for (const submission of typeformData.items) {
-  await fetch('https://api.formbuilder.app/v1/forms/YOUR_FORM_ID/submissions', {
+  await fetch('https://api.FormWeaver.app/v1/forms/YOUR_FORM_ID/submissions', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${SECRET_KEY}`,
@@ -1584,11 +1584,11 @@ for (const submission of typeformData.items) {
 <div data-tf-widget="YOUR_FORM_ID"></div>
 <script src="//embed.typeform.com/next/embed.js"></script>
 
-<!-- After (FormBuilder) -->
+<!-- After (FormWeaver) -->
 <div id="form-container"></div>
-<script src="https://cdn.formbuilder.app/sdk.min.js"></script>
+<script src="https://cdn.FormWeaver.app/sdk.min.js"></script>
 <script>
-  FormBuilder.render({
+  FormWeaver.render({
     formId: 'form_abc123xyz',
     container: '#form-container'
   });
@@ -1602,7 +1602,7 @@ for (const submission of typeformData.items) {
 2. Click three dots → Download responses (.csv)
 3. Save as `google_forms_export.csv`
 
-**Step 2: Import to FormBuilder**
+**Step 2: Import to FormWeaver**
 1. Create matching form structure
 2. Go to Submissions → Import
 3. Upload CSV and map columns to fields
@@ -1613,15 +1613,15 @@ for (const submission of typeformData.items) {
 <!-- Before (Google Forms) -->
 <iframe src="https://docs.google.com/forms/d/e/FORM_ID/viewform?embedded=true"></iframe>
 
-<!-- After (FormBuilder) -->
-<iframe src="https://forms.formbuilder.app/f/form_abc123xyz"></iframe>
+<!-- After (FormWeaver) -->
+<iframe src="https://forms.FormWeaver.app/f/form_abc123xyz"></iframe>
 ```
 
 ### 14.3 From Wufoo
 
 Similar process to Typeform:
 1. Export Wufoo entries (CSV)
-2. Create form in FormBuilder
+2. Create form in FormWeaver
 3. Import submissions via CSV or API
 4. Replace Wufoo embed code
 5. Update webhook URLs
@@ -1643,7 +1643,7 @@ let currentStep = 0;
 let formData = {};
 
 function renderStep(stepIndex) {
-  FormBuilder.render({
+  FormWeaver.render({
     formId: steps[stepIndex],
     container: '#form-container',
     initialValues: formData,
@@ -1669,11 +1669,11 @@ renderStep(0);
 
 ### 15.2 Conditional Logic
 ```javascript
-FormBuilder.render({
+FormWeaver.render({
   formId: 'form_abc123xyz',
   container: '#app',
   onChange: (fieldId, value) => {
-    const form = FormBuilder.getInstance('#app');
+    const form = FormWeaver.getInstance('#app');
     
     // Show/hide fields based on values
     if (fieldId === 'country' && value === 'US') {
@@ -1701,7 +1701,7 @@ FormBuilder.render({
 // Randomly assign variant
 const variant = Math.random() < 0.5 ? 'form_variant_a' : 'form_variant_b';
 
-FormBuilder.render({
+FormWeaver.render({
   formId: variant,
   container: '#app',
   onSubmit: (data) => {
@@ -1723,7 +1723,7 @@ const hiddenFields = Object.keys(userProfile).filter(key =>
   userProfile[key] !== null
 );
 
-FormBuilder.render({
+FormWeaver.render({
   formId: 'form_abc123xyz',
   container: '#app',
   initialValues: userProfile,
@@ -1741,9 +1741,9 @@ FormBuilder.render({
 ## 16. Code Examples Repository
 
 Find full working examples at:
-- **GitHub:** [github.com/formbuilder/examples](https://github.com/formbuilder/examples)
-- **CodeSandbox:** [codesandbox.io/formbuilder](https://codesandbox.io/formbuilder)
-- **StackBlitz:** [stackblitz.com/@formbuilder](https://stackblitz.com/@formbuilder)
+- **GitHub:** [github.com/FormWeaver/examples](https://github.com/FormWeaver/examples)
+- **CodeSandbox:** [codesandbox.io/FormWeaver](https://codesandbox.io/FormWeaver)
+- **StackBlitz:** [stackblitz.com/@FormWeaver](https://stackblitz.com/@FormWeaver)
 
 **Examples:**
 - Next.js 14 App Router + Server Actions
@@ -1763,7 +1763,7 @@ Find full working examples at:
 
 ## 17. API Reference
 
-**Base URL:** `https://api.formbuilder.app/v1` (Cloudflare Workers global edge network)
+**Base URL:** `https://api.FormWeaver.app/v1` (Cloudflare Workers global edge network)
 
 **Authentication:**
 ```
@@ -1788,29 +1788,29 @@ DELETE /forms/:id                        # Delete form
 - 100 req/min per user (authenticated)
 - Custom limits available (Enterprise plan)
 
-**Full documentation:** [docs.formbuilder.app/api](https://docs.formbuilder.app/api)
+**Full documentation:** [docs.FormWeaver.app/api](https://docs.FormWeaver.app/api)
 
 ---
 
 ## 18. Support & Resources
 
 **Documentation:**
-- Main Docs: [docs.formbuilder.app](https://docs.formbuilder.app)
-- API Reference: [docs.formbuilder.app/api](https://docs.formbuilder.app/api)
-- SDK Reference: [docs.formbuilder.app/sdk](https://docs.formbuilder.app/sdk)
+- Main Docs: [docs.FormWeaver.app](https://docs.FormWeaver.app)
+- API Reference: [docs.FormWeaver.app/api](https://docs.FormWeaver.app/api)
+- SDK Reference: [docs.FormWeaver.app/sdk](https://docs.FormWeaver.app/sdk)
 
 **Community:**
-- Discord: [discord.gg/formbuilder](https://discord.gg/formbuilder)
-- GitHub Discussions: [github.com/formbuilder/community](https://github.com/formbuilder/community)
-- Stack Overflow: Tag `formbuilder-saas`
+- Discord: [discord.gg/FormWeaver](https://discord.gg/FormWeaver)
+- GitHub Discussions: [github.com/FormWeaver/community](https://github.com/FormWeaver/community)
+- Stack Overflow: Tag `FormWeaver-saas`
 
 **Support:**
-- Email: support@formbuilder.app
+- Email: support@FormWeaver.app
 - Chat: In-app chat (bottom right)
-- Twitter: [@formbuilder](https://twitter.com/formbuilder)
+- Twitter: [@FormWeaver](https://twitter.com/FormWeaver)
 
 **Status & Performance:**
-- Status Page: [status.formbuilder.app](https://status.formbuilder.app)
+- Status Page: [status.FormWeaver.app](https://status.FormWeaver.app)
 - Cloudflare Network Status: [cloudflarestatus.com](https://cloudflarestatus.com)
 - API Performance: 99.99% uptime, <50ms p99 latency globally
 
@@ -1827,17 +1827,17 @@ A: Forms are served from Cloudflare's global edge network (300+ locations) for <
 **Q: Can I use my own domain?**  
 A: Yes! Business and Enterprise plans support custom domains (forms.yourdomain.com).
 
-**Q: How do I migrate from another form builder?**  
+**Q: How do I migrate from another FormWeaver?**  
 A: See Migration Guides section above. We provide import tools and support to help you migrate.
 
 **Q: What happens if Cloudflare has an outage?**  
 A: Cloudflare has 99.99%+ uptime. In rare outages, forms gracefully degrade and queue submissions for retry.
 
 **Q: Can I self-host?**  
-A: Not currently. FormBuilder is a managed SaaS built on Cloudflare Workers infrastructure.
+A: Not currently. FormWeaver is a managed SaaS built on Cloudflare Workers infrastructure.
 
 **Q: Do you support GDPR/CCPA compliance?**  
-A: Yes. See [docs.formbuilder.app/privacy](https://docs.formbuilder.app/privacy) for data handling and compliance information.
+A: Yes. See [docs.FormWeaver.app/privacy](https://docs.FormWeaver.app/privacy) for data handling and compliance information.
 
 ---
 

@@ -1,6 +1,6 @@
 # Development Rules & Standards
 
-**Project:** Form Builder SaaS (Cloudflare Workers + Hono)  
+**Project:** FormWeaver SaaS (Cloudflare Workers + Hono)  
 **Last Updated:** 2025-11-16  
 **Enforcement:** All PRs must pass these checks
 
@@ -103,7 +103,7 @@ export default forms;
 Frontend (src/):
   components/
     FieldPalette.tsx          # PascalCase for components
-    FormBuilder/
+    FormWeaver/
       index.ts                # Barrel exports
       FieldPalette.tsx
       PropertyEditor.tsx
@@ -115,7 +115,7 @@ Frontend (src/):
     formatDate.ts             # camelCase for utilities
 
   types/
-    formBuilder.ts            # camelCase for type files
+    FormWeaver.ts            # camelCase for type files
 
 Backend (worker/):
   routes/
@@ -150,7 +150,7 @@ project-root/
 │   ├── src/
 │   │   ├── components/      # Reusable UI components
 │   │   │   ├── ui/          # shadcn components (don't edit directly)
-│   │   │   ├── FormBuilder/
+│   │   │   ├── FormWeaver/
 │   │   │   └── common/
 │   │   ├── hooks/           # Custom React hooks
 │   │   ├── lib/             # Third-party library configs
@@ -304,7 +304,7 @@ const buttonVariants = cva(
         default: "bg-primary text-primary-foreground hover:bg-primary/90",
         outline: "border border-input bg-background hover:bg-accent",
         ghost: "hover:bg-accent hover:text-accent-foreground",
-        // Custom variant for form builder
+        // Custom variant for FormWeaver
         canvas: "bg-canvas border border-border hover:bg-palette",
       },
     },
@@ -432,7 +432,7 @@ app.use('*', async (c, next) => {
 import { cors } from 'hono/cors';
 
 app.use('/api/*', cors({
-  origin: ['https://formbuilder.app', 'http://localhost:5173'],
+  origin: ['https://FormWeaver.app', 'http://localhost:5173'],
   allowMethods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowHeaders: ['Authorization', 'Content-Type'],
   credentials: true,
@@ -598,7 +598,7 @@ describe('POST /forms', () => {
 import { render, screen, fireEvent } from '@testing-library/react';
 
 test('user can create a form field', async () => {
-  render(<FormBuilder />);
+  render(<FormWeaver />);
   
   // Drag field from palette
   const textField = screen.getByText('Text Input');
@@ -825,7 +825,7 @@ All endpoints require Bearer token in Authorization header.
 
 ## Example
 \`\`\`bash
-curl -X POST https://api.formbuilder.app/forms \
+curl -X POST https://api.FormWeaver.app/forms \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"name": "Contact Form"}'
@@ -839,13 +839,13 @@ curl -X POST https://api.formbuilder.app/forms \
 ### 11.1 Frontend (.env)
 ```bash
 # Public (exposed to browser)
-VITE_API_URL=https://api.formbuilder.app
-VITE_APP_URL=https://formbuilder.app
+VITE_API_URL=https://api.FormWeaver.app
+VITE_APP_URL=https://FormWeaver.app
 ```
 
 ### 11.2 Backend (wrangler.toml)
 ```toml
-name = "formbuilder-api"
+name = "FormWeaver-api"
 main = "src/index.ts"
 compatibility_date = "2025-01-01"
 
@@ -859,7 +859,7 @@ ENVIRONMENT = "production"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "formbuilder"
+database_name = "FormWeaver"
 database_id = "xxx"
 
 [[kv_namespaces]]
@@ -872,7 +872,7 @@ id = "xxx"
 
 [[r2_buckets]]
 binding = "FILE_UPLOADS"
-bucket_name = "formbuilder-uploads"
+bucket_name = "FormWeaver-uploads"
 ```
 
 ### 11.3 Setting Secrets
@@ -942,16 +942,16 @@ wrangler deploy --dry-run  # Validate deployment
 ### 13.2 Database Migrations (D1)
 ```bash
 # Create migration
-wrangler d1 migrations create formbuilder add_custom_elements
+wrangler d1 migrations create FormWeaver add_custom_elements
 
 # Apply migration (local)
-wrangler d1 migrations apply formbuilder --local
+wrangler d1 migrations apply FormWeaver --local
 
 # Apply migration (production)
-wrangler d1 migrations apply formbuilder --remote
+wrangler d1 migrations apply FormWeaver --remote
 
 # List migrations
-wrangler d1 migrations list formbuilder
+wrangler d1 migrations list FormWeaver
 ```
 
 ```sql
@@ -1428,7 +1428,7 @@ app.use('*', async (c, next) => {
 
 **Questions about these rules?**
 - Slack: #engineering channel
-- Email: dev@formbuilder.app
+- Email: dev@FormWeaver.app
 - GitHub Discussions: Technical debates
 
 **Rule Changes:**
@@ -1551,7 +1551,7 @@ const getActiveForms = async (env: Env, workspaceId: string) => {
 wrangler dev --log-level debug
 
 # View D1 database
-wrangler d1 execute formbuilder --command "SELECT * FROM forms LIMIT 5"
+wrangler d1 execute FormWeaver --command "SELECT * FROM forms LIMIT 5"
 
 # View KV data
 wrangler kv:key get --binding=FORM_CACHE "form:123"

@@ -1,0 +1,59 @@
+# Form Builder SaaS - Setup Information
+Generated: 2025-11-16 20:37:33
+
+## Project Location
+C:\Self_Projects\formweaver
+
+## Git Status
+On branch master Changes not staged for commit:   (use "git add <file>..." to update what will be committed)   (use "git restore <file>..." to discard changes in working directory)   (commit or discard the untracked or modified content in submodules) 	modified:   frontend (modified content, untracked content)  no changes added to commit (use "git add" and/or "git commit -a")
+
+## Frontend
+- Repository: https://github.com/Jositett/form-weaver.git
+- Location: C:\Self_Projects\formweaver/frontend
+- Dev Server: http://localhost:5173
+
+## Backend
+- Location: C:\Self_Projects\formweaver/backend
+- API Server: http://localhost:8787
+- Framework: Hono + Cloudflare Workers
+
+## Documentation
+- Backend API: C:\Self_Projects\formweaver/docs/BACKEND.md
+- MVP Roadmap: C:\Self_Projects\formweaver/docs/MVP_ROADMAP.md
+- Dev Rules: C:\Self_Projects\formweaver/docs/DEV_RULES.md
+
+## Quick Start Commands
+
+### Start Development (run in separate terminals):
+
+Terminal 1 - Frontend:
+cd C:\Self_Projects\formweaver/frontend
+npm run dev
+
+Terminal 2 - Backend:
+cd C:\Self_Projects\formweaver/backend
+npm run d1:migrate
+npm run dev
+
+### First Time Setup:
+cd C:\Self_Projects\formweaver/backend
+wrangler secret put JWT_SECRET
+
+## Environment Files
+- Frontend: C:\Self_Projects\formweaver/frontend/.env
+- Backend: Secrets managed via Wrangler CLI
+
+## Next Steps
+1. ✅ Initialize D1 database (see commands above)
+2. ✅ Set JWT secret key
+3. ✅ Start both dev servers
+4. ✅ Implement auth routes (backend/src/routes/auth.ts)
+5. ✅ Implement forms routes (backend/src/routes/forms.ts)
+
+For full documentation, see: C:\Self_Projects\formweaver/docs/
+
+## Branding
+- Brand Name: FormWeaver
+- Colors: Cyan (#00E5FF) + Navy (#0A1628)
+- Theme: Network/weaving with connected nodes
+- See: C:\Self_Projects\formweaver/docs/BRANDING.md

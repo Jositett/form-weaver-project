@@ -1,0 +1,25 @@
+# FormWeaver Rebranding Summary
+Generated: 2025-11-16 21:15:09
+
+## Changes Made
+- Files updated: 14
+- Total replacements: 166
+
+## Brand Identity
+- Name: FormWeaver
+- Domain: formweaver.app
+- Primary Color: Cyan (#00E5FF)
+- Secondary Color: Navy (#0A1628)
+
+## Files Updated
+- C:\Self_Projects\formweaver\post_setup_guide.md - C:\Self_Projects\formweaver\README.md - C:\Self_Projects\formweaver\docs\BACKEND.md - C:\Self_Projects\formweaver\docs\DEV_RULES.md - C:\Self_Projects\formweaver\docs\EMBEDDING_GUIDE.md - C:\Self_Projects\formweaver\docs\MVP_ROADMAP.md - C:\Self_Projects\formweaver\docs\PRD.md - C:\Self_Projects\formweaver\docs\PRICING.md - C:\Self_Projects\formweaver\frontend\README.md - C:\Self_Projects\formweaver\frontend\docs\DEV_RULES.md - C:\Self_Projects\formweaver\frontend\docs\EMBEDDING_GUIDE.md - C:\Self_Projects\formweaver\frontend\docs\MVP_ROADMAP.md - C:\Self_Projects\formweaver\frontend\docs\PRD.md - C:\Self_Projects\formweaver\frontend\docs\PRICING.md - C:\Self_Projects\formweaver\backend\src\index.ts - C:\Self_Projects\formweaver\frontend\tailwind.config.ts - C:\Self_Projects\formweaver\frontend\vite.config.ts - C:\Self_Projects\formweaver\frontend\src\vite-env.d.ts - C:\Self_Projects\formweaver\frontend\src\components\ui\use-toast.ts - C:\Self_Projects\formweaver\frontend\src\hooks\use-toast.ts - C:\Self_Projects\formweaver\frontend\src\lib\utils.ts - C:\Self_Projects\formweaver\frontend\src\types\formBuilder.ts - C:\Self_Projects\formweaver\shared\types\index.ts - C:\Self_Projects\formweaver\frontend\src\App.tsx - C:\Self_Projects\formweaver\frontend\src\main.tsx - C:\Self_Projects\formweaver\frontend\src\components\NavLink.tsx - C:\Self_Projects\formweaver\frontend\src\components\FormBuilder\FieldPalette.tsx - C:\Self_Projects\formweaver\frontend\src\components\FormBuilder\FormCanvas.tsx - C:\Self_Projects\formweaver\frontend\src\components\FormBuilder\FormPreview.tsx - C:\Self_Projects\formweaver\frontend\src\components\FormBuilder\PropertyEditor.tsx - C:\Self_Projects\formweaver\frontend\src\components\ui\accordion.tsx - C:\Self_Projects\formweaver\frontend\src\components\ui\alert-dialog.tsx - C:\Self_Projects\formweaver\frontend\src\components\ui\alert.tsx - C:\Self_Projects\formweaver\frontend\src\components\ui\aspect-ratio.tsx - C:\Self_Projects\formweaver\frontend\src\components\ui\avatar.tsx - C:\Self_Projects\formweaver\frontend\src\components\ui\badge.tsx - C:\Self_Projects\formweaver\frontend\src\components\ui\breadcrumb.tsx - C:\Self_Projects\formweaver\frontend\src\components\ui\button.tsx - C:\Self_Projects\formweaver\frontend\src\components\ui\calendar.tsx - C:\Self_Projects\formweaver\frontend\src\components\ui\card.tsx - C:\Self_Projects\formweaver\frontend\src\components\ui\carousel.tsx - C:\Self_Projects\formweaver\frontend\src\components\ui\chart.tsx - C:\Self_Projects\formweaver\frontend\src\components\ui\checkbox.tsx - C:\Self_Projects\formweaver\frontend\src\components\ui\collapsible.tsx - C:\Self_Projects\formweaver\frontend\src\components\ui\command.tsx - C:\Self_Projects\formweaver\frontend\src\components\ui\context-menu.tsx - C:\Self_Projects\formweaver\frontend\src\components\ui\dialog.tsx - C:\Self_Projects\formweaver\frontend\src\components\ui\drawer.tsx - C:\Self_Projects\formweaver\frontend\src\components\ui\dropdown-menu.tsx - C:\Self_Projects\formweaver\frontend\src\components\ui\form.tsx
+
+## Action Items
+- [ ] Update domain DNS records
+- [ ] Update GitHub repository name
+- [ ] Update NPM packages
+- [ ] Update social media profiles
+- [ ] Update email addresses
+- [ ] Deploy to production
+
+For full branding guidelines, see: docs/BRANDING.md
