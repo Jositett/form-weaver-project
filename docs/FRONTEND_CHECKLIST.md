@@ -176,32 +176,32 @@ When asked to continue frontend work:
 
 ### File Upload Fields
 
-- [ ] File upload field type
-  - [ ] Add "File Upload" to field palette
-  - [ ] File upload field component
-  - [ ] File input with drag-and-drop
-  - [ ] File preview (images, PDFs)
-  - [ ] File size validation
-  - [ ] File type validation
-  - [ ] Multiple file support toggle
-  - [ ] Max file size configuration
-  - [ ] Allowed file types configuration
-- [ ] File upload UI components
-  - [ ] FileUploadField component
-  - [ ] FilePreview component
-  - [ ] FileUploadProgress component
-  - [ ] FileList component (for multiple files)
-- [ ] File upload integration
-  - [ ] Upload files to backend (R2 storage)
-  - [ ] Show upload progress
-  - [ ] Handle upload errors
-  - [ ] Display uploaded files in submissions
-  - [ ] File download functionality
-- [ ] File upload in FormRenderer
-  - [ ] Render file upload field in public forms
-  - [ ] Handle file selection
-  - [ ] Validate files before submission
-  - [ ] Include files in form submission
+- [x] File upload field type
+  - [x] Add "File Upload" to field palette
+  - [x] File upload field component
+  - [x] File input with drag-and-drop
+  - [x] File preview (images, PDFs)
+  - [x] File size validation
+  - [x] File type validation
+  - [x] Multiple file support toggle
+  - [x] Max file size configuration
+  - [x] Allowed file types configuration
+- [x] File upload UI components
+  - [x] FileUploadField component
+  - [x] FilePreview component (integrated in FileUploadField)
+  - [x] FileUploadProgress component (upload state indicated)
+  - [x] FileList component (for multiple files) (integrated in FileUploadField)
+- [x] File upload integration
+  - [x] Upload files to backend (R2 storage)
+  - [x] Show upload progress
+  - [x] Handle upload errors
+  - [x] Display uploaded files in submissions
+  - [x] File download functionality
+- [x] File upload in FormRenderer
+  - [x] Render file upload field in public forms
+  - [x] Handle file selection
+  - [x] Validate files before submission
+  - [x] Include files in form submission
 
 ### Additional Features
 

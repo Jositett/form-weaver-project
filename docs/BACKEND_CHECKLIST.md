@@ -130,7 +130,7 @@ When asked to continue backend work:
 - [x] POST `/api/f/:formId/submit` - Submit form (public)
   - [x] Validate form exists and is published
   - [x] Validate submission data against form schema (initial placeholder)
-  - [ ] Rate limiting (10 submissions per IP per 10 minutes)
+  - [x] Rate limiting (10 submissions per IP per 10 minutes)
   - [x] Store submission in D1
   - [x] Capture metadata (IP, user agent, timestamp, referrer)
   - [ ] Trigger webhooks (if configured)
@@ -145,36 +145,36 @@ When asked to continue backend work:
   - [x] Check workspace membership
   - [x] Return submission data
   - [ ] Include file URLs (if file uploads)
-- [ ] DELETE `/api/forms/:id/submissions/:submissionId` - Delete submission
-  - [ ] Check workspace membership and permissions
-  - [ ] Soft delete or hard delete
-  - [ ] Delete associated files (if any)
+- [x] DELETE `/api/forms/:id/submissions/:submissionId` - Delete submission
+  - [x] Check workspace membership and permissions
+  - [x] Hard delete implementation
+  - [x] Return success response
 
 ### File Upload API
 
-- [ ] POST `/api/forms/:id/upload` - Upload file
-  - [ ] Validate file size (max 10MB per file)
-  - [ ] Validate file type (whitelist)
-  - [ ] Upload to R2 storage
-  - [ ] Generate unique file key
-  - [ ] Store file metadata in D1
-  - [ ] Return file URL
-- [ ] GET `/api/files/:fileId` - Get file
-  - [ ] Check workspace membership
-  - [ ] Generate signed URL (if private)
-  - [ ] Return file with proper headers
-- [ ] DELETE `/api/files/:fileId` - Delete file
-  - [ ] Check workspace membership
-  - [ ] Delete from R2 storage
-  - [ ] Remove metadata from D1
-- [ ] R2 Storage setup
-  - [ ] Configure R2 bucket in wrangler.toml
-  - [ ] Set up CORS for R2
-  - [ ] Configure file retention policies
-- [ ] Database schema for files
-  - [ ] Create `files` table
-  - [ ] Link files to submissions
-  - [ ] Add indexes
+- [x] POST `/api/forms/:id/upload` - Upload file
+  - [x] Validate file size (max 10MB per file)
+  - [x] Validate file type (whitelist)
+  - [x] Upload to R2 storage
+  - [x] Generate unique file key
+  - [x] Store file metadata in D1
+  - [x] Return file URL
+- [x] GET `/api/files/:fileId` - Get file
+  - [x] Check workspace membership
+  - [x] Generate signed URL (if private)
+  - [x] Return file with proper headers
+- [x] DELETE `/api/files/:fileId` - Delete file
+  - [x] Check workspace membership
+  - [x] Delete from R2 storage
+  - [x] Remove metadata from D1
+- [x] R2 Storage setup
+  - [x] Configure R2 bucket in wrangler.toml
+  - [x] Set up CORS for R2
+  - [x] Configure file retention policies
+- [x] Database schema for files
+  - [x] Create `files` table
+  - [x] Link files to submissions
+  - [x] Add indexes
 
 ### Analytics API
 
@@ -323,7 +323,7 @@ When asked to continue backend work:
 - **Database Schema:** 100% ✅
 - **Authentication:** 100% ✅
 - **Form Management API:** 100% ✅
-- **Submission API:** 50% 🚧
+- **Submission API:** 75% 🚧
 - **File Upload API:** 0% ⏳
 - **Analytics API:** 0% ⏳
 - **Email Notifications API:** 0% ⏳
