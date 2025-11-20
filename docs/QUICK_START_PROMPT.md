@@ -20,7 +20,7 @@ I'm working on the FormWeaver project. Continue frontend development in sprints.
 - Only ask for clarification if you encounter blockers or need decisions
 - Follow the priority order in the checklist
 - Update checklists after completing work
-- After completing the sprint, run git commands to sync the frontend submodule.
+- After completing the sprint, run: git -C frontend add . && git -C frontend commit -m "FEAT: [brief description]" && git -C frontend push
 - Check backend/README.md for any new API endpoints or R2 storage capabilities
 
 **Context Files:**
@@ -57,7 +57,7 @@ I'm working on the FormWeaver project. Continue backend development in sprints.
 - Only ask for clarification if you encounter blockers or need decisions
 - Follow the priority order in the checklist
 - Update checklists after completing work
-- After completing the sprint, run git commands to sync the backend submodule.
+- After completing the sprint, run: git -C backend add . && git -C backend commit -m "FEAT: [brief description]" && git -C backend push
 - Check docs/FRONTEND_CHECKLIST.md for API requirements frontend needs
 - Ensure type safety using the Bindings pattern in src/types/index.ts
 
@@ -104,7 +104,7 @@ I'm working on the FormWeaver project. Continue development in sprints.
 - Only ask for clarification if you encounter blockers or need decisions
 - Follow the priority order in the relevant checklist
 - Update checklists after completing work
-- After completing the sprint, run git commands to sync the relevant submodule or the main repository.
+- After completing the sprint, run git commands to sync the relevant submodule (e.g., git -C frontend commit) or the main repository.
 - Coordinate between frontend and backend when dependencies exist
 
 **Context Files:**
@@ -140,7 +140,7 @@ Run type checks, lint checks, and resolve all errors/warnings in the [Frontend/B
 ### Sync Git Submodules
 
 ```markdown
-After completing the sprint, run git commands to sync the [frontend/backend] submodule.
+git -C [frontend/backend] add . && git -C [frontend/backend] commit -m "FEAT: [brief description]" && git -C [frontend/backend] push
 ```
 
 ### Sync Main Repository
