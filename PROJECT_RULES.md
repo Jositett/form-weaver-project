@@ -55,7 +55,7 @@ FormWeaver is a powerful, embeddable form builder built on Cloudflare's global e
 
 ### Project Structure (MANDATORY)
 
-```
+```text
 formweaver/
 ├── frontend/              # React application
 │   ├── src/
