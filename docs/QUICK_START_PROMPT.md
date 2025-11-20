@@ -1,22 +1,3 @@
-Let me fetch the current prompt file to see what updates are needed.
-I need to know what specific changes you want to make to the prompts. However, based on our recent work updating the backend documentation, I can suggest these likely updates:
-
-## Proposed Changes
-
-1. **Node.js version**: Update from `>= 18.x` to `>= 16.17.0`
-2. **Add R2 context**: R2 storage is now a core component
-3. **Add environment setup**: `.dev.vars` workflow for local secrets
-4. **Enhanced secrets management**: Detailed secrets setup process
-5. **Update backend README references**: New structure with secrets section
-6. **Add type safety**: `Bindings` pattern from types/index.ts
-
-## Updated Prompts (Proposed)
-
-Here are the prompts with these updates applied:
-
----
-
-```markdown
 # Quick Start Prompts for New Chat Sessions
 
 ## 🎨 Frontend Development Prompt
@@ -31,13 +12,15 @@ I'm working on the FormWeaver project. Continue frontend development in sprints.
 4. Determine the highest priority pending feature from the checklist
 5. Break it into a 2-3 hour sprint
 6. Implement the first sprint task following project conventions
-7. Update the checklist as you complete items
+7. Run type checks, lint checks, and resolve all errors/warnings in the frontend codebase.
+8. Update the checklist as you complete items
 
 **Work Autonomously:**
 - Use the checklist to determine what to do next
 - Only ask for clarification if you encounter blockers or need decisions
 - Follow the priority order in the checklist
 - Update checklists after completing work
+- After completing the sprint, run git commands to sync the frontend submodule.
 - Check backend/README.md for any new API endpoints or R2 storage capabilities
 
 **Context Files:**
@@ -66,13 +49,15 @@ I'm working on the FormWeaver project. Continue backend development in sprints.
 5. Determine the highest priority pending feature from the checklist
 6. Break it into a 2-3 hour sprint
 7. Implement the first sprint task following project conventions
-8. Update the checklist as you complete items
+8. Run type checks, lint checks, and resolve all errors/warnings in the backend codebase.
+9. Update the checklist as you complete items
 
 **Work Autonomously:**
 - Use the checklist to determine what to do next
 - Only ask for clarification if you encounter blockers or need decisions
 - Follow the priority order in the checklist
 - Update checklists after completing work
+- After completing the sprint, run git commands to sync the backend submodule.
 - Check docs/FRONTEND_CHECKLIST.md for API requirements frontend needs
 - Ensure type safety using the Bindings pattern in src/types/index.ts
 
@@ -111,6 +96,7 @@ I'm working on the FormWeaver project. Continue development in sprints.
 7. Break it into a 2-3 hour sprint
 8. Implement the first sprint task following project conventions
 9. Update both the specific checklist and PROGRESS_CHECKLIST.md as you complete items
+10. Run type checks, lint checks, and resolve all errors/warnings in the relevant codebase (Frontend or Backend).
 
 **Work Autonomously:**
 - Use PROGRESS_CHECKLIST.md to determine which component to work on
@@ -118,6 +104,7 @@ I'm working on the FormWeaver project. Continue development in sprints.
 - Only ask for clarification if you encounter blockers or need decisions
 - Follow the priority order in the relevant checklist
 - Update checklists after completing work
+- After completing the sprint, run git commands to sync the relevant submodule or the main repository.
 - Coordinate between frontend and backend when dependencies exist
 
 **Context Files:**
@@ -139,6 +126,28 @@ Start working now. Review the overall progress, determine which component needs 
 ```
 
 ---
+
+## 🛠️ Utility Prompts
+
+These prompts are for specific, non-sprint tasks like code quality checks or project synchronization.
+
+### Run Code Quality Checks
+
+```markdown
+Run type checks, lint checks, and resolve all errors/warnings in the [Frontend/Backend] codebase.
+```
+
+### Sync Git Submodules
+
+```markdown
+After completing the sprint, run git commands to sync the [frontend/backend] submodule.
+```
+
+### Sync Main Repository
+
+```markdown
+After completing the sprint, run git commands to sync the main repository.
+```
 
 ## 🎯 For Specific Issues
 
@@ -165,4 +174,3 @@ Otherwise, the agent will autonomously follow the checklist priority order.
 ---
 
 **See [HOW_TO_CONTINUE_WORK.md](HOW_TO_CONTINUE_WORK.md) for more detailed instructions on sprint-based development.**
-```
