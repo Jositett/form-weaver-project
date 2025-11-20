@@ -133,8 +133,8 @@ When asked to continue backend work:
   - [x] Rate limiting (10 submissions per IP per 10 minutes)
   - [x] Store submission in D1
   - [x] Capture metadata (IP, user agent, timestamp, referrer)
-  - [ ] Trigger webhooks (if configured)
-  - [ ] Send email notifications (if configured)
+  - [x] Trigger webhooks (if configured)
+  - [x] Send email notifications (if configured)
 - [x] GET `/api/forms/:id/submissions` - List submissions
   - [x] Check workspace membership
   - [x] Pagination (cursor-based, 50 per page)
@@ -323,8 +323,8 @@ When asked to continue backend work:
 - **Database Schema:** 100% ✅
 - **Authentication:** 100% ✅
 - **Form Management API:** 100% ✅
-- **Submission API:** 75% 🚧
-- **File Upload API:** 0% ⏳
+- **Submission API:** 100% ✅
+- **File Upload API:** 100% ✅
 - **Analytics API:** 0% ⏳
 - **Email Notifications API:** 0% ⏳
 - **Webhooks API:** 0% ⏳
