@@ -69,7 +69,7 @@ import { Hono } from 'hono';
 import { z } from 'zod';
 import { zValidator } from '@hono/zod-validator';
 
-const forms = new Hono();
+const forms = new Hono<{ Bindings: Env }>();
 
 const createFormSchema = z.object({
   name: z.string().min(1).max(100),
@@ -94,7 +94,7 @@ export default forms;
 **Rules:**
 - **Group routes by resource** - Separate Hono apps for `/forms`, `/auth`, etc.
 - **Use zod-validator** - Validate all input with Zod
-- **Type context** - Extend Hono context with custom variables
+- **Type context** - Extend Hono context with custom variables (must use `Env` from [`backend/src/types/Env.ts`](backend/src/types/Env.ts))
 - **Return typed responses** - Use `c.json<ResponseType>(data)`
 - **HTTP status codes** - Use correct codes (201 for created, 204 for no content)
 
@@ -117,7 +117,7 @@ Frontend (src/):
   types/
     FormWeaver.ts            # camelCase for type files
 
-Backend (worker/):
+Backend (backend/):
   routes/
     forms.ts                  # camelCase for route files
     submissions.ts
@@ -159,7 +159,7 @@ project-root/
 │   │   └── utils/           # Helper functions
 │   └── package.json
 │
-├── worker/                  # Cloudflare Worker (Hono API)
+├── backend/                 # Cloudflare Worker (Hono API)
 │   ├── src/
 │   │   ├── index.ts         # Main Hono app entry
 │   │   ├── routes/          # API route handlers
@@ -172,10 +172,10 @@ project-root/
 │   │   │   ├── cors.ts
 │   │   │   └── rateLimiter.ts
 │   │   ├── db/              # D1 database
+│   │   │   ├── db.ts        # D1 utility function (getDb)
 │   │   │   ├── schema.sql
-│   │   │   ├── migrations/
-│   │   │   └── queries.ts   # Prepared statements
-│   │   ├── types/           # Shared types
+│   │   │   └── migrations/  # Migration files
+│   │   ├── types/           # TypeScript types (including Env.ts)
 │   │   └── utils/           # Helper functions
 │   ├── wrangler.toml        # Cloudflare config
 │   └── package.json
@@ -231,7 +231,7 @@ const useForm = (formId: string) => {
 **Backend (D1 Queries):**
 ```typescript
 // ✅ GOOD: Prepared statements with D1
-const getFormById = async (db: D1Database, formId: string) => {
+const getFormById = async (db: D1Database | D1Database, formId: string) => { // Use getDb(env)
   const stmt = db.prepare(
     'SELECT * FROM forms WHERE id = ? AND deleted_at IS NULL'
   );
@@ -245,6 +245,7 @@ const query = `SELECT * FROM forms WHERE id = '${formId}'`; // NEVER DO THIS
 **Rules:**
 - **Use TanStack Query** for all server data fetching (frontend)
 - **Use D1 prepared statements** for all database queries (backend)
+- **All D1 access** must be done via the `getDb(env: Env)` utility function from [`backend/src/db/db.ts`](backend/src/db/db.ts).
 - **Invalidate queries** on mutations
 - **Optimistic updates** for instant feedback
 - **Error boundaries** to catch rendering errors
@@ -932,7 +933,7 @@ npm run test             # Unit tests
 npm run build            # Production build
 
 # Backend
-cd worker
+cd backend
 npm run type-check       # TypeScript errors
 npm run lint             # ESLint warnings
 npm run test             # Unit tests
@@ -1058,21 +1059,23 @@ Sentry.init({
 ```typescript
 // ✅ GOOD: Access D1 via environment bindings
 const getForm = async (env: Env, formId: string) => {
-  return await env.DB.prepare(
+  const db = getDb(env); // Use the utility function
+  return await db.prepare(
     'SELECT * FROM forms WHERE id = ?'
   ).bind(formId).first();
 };
 
-// ❌ BAD: Creating new connections
-// D1 doesn't require connection pooling - use bindings
+// ❌ BAD: Direct access to c.env.DB
+// All D1 access must be done via getDb(env)
 ```
 
 **Batch Operations:**
 ```typescript
 // ✅ GOOD: Use batch() for multiple queries
-const results = await env.DB.batch([
-  env.DB.prepare('SELECT * FROM forms WHERE workspace_id = ?').bind(workspaceId),
-  env.DB.prepare('SELECT COUNT(*) FROM submissions WHERE form_id = ?').bind(formId),
+const db = getDb(env);
+const results = await db.batch([
+  db.prepare('SELECT * FROM forms WHERE workspace_id = ?').bind(workspaceId),
+  db.prepare('SELECT COUNT(*) FROM submissions WHERE form_id = ?').bind(formId),
 ]);
 
 const [forms, submissionCount] = results;
@@ -1081,7 +1084,8 @@ const [forms, submissionCount] = results;
 **Transaction Support:**
 ```typescript
 // ✅ GOOD: Use transactions for related operations
-await env.DB.prepare(
+const db = getDb(env);
+await db.prepare(
   `BEGIN TRANSACTION;
    INSERT INTO forms (id, name, workspace_id) VALUES (?, ?, ?);
    INSERT INTO form_audit (form_id, action) VALUES (?, 'created');
@@ -1105,7 +1109,8 @@ const getCachedForm = async (env: Env, formId: string) => {
   }
   
   // Fetch from D1
-  const form = await env.DB.prepare(
+  const db = getDb(env);
+  const form = await db.prepare(
     'SELECT * FROM forms WHERE id = ?'
   ).bind(formId).first();
   
@@ -1451,7 +1456,7 @@ app.use('*', async (c, next) => {
 ```typescript
 // ✅ GOOD: Cursor-based pagination with D1
 const listForms = async (env: Env, workspaceId: string, cursor?: string, limit = 20) => {
-  let query = env.DB.prepare(`
+  let query = getDb(env).prepare(`
     SELECT * FROM forms 
     WHERE workspace_id = ? 
     AND (? IS NULL OR created_at < ?)
@@ -1477,7 +1482,7 @@ const listForms = async (env: Env, workspaceId: string, cursor?: string, limit =
 const deleteForms = async (env: Env, formIds: string[]) => {
   const placeholders = formIds.map(() => '?').join(',');
   
-  return await env.DB.prepare(
+  return await getDb(env).prepare(
     `DELETE FROM forms WHERE id IN (${placeholders})`
   ).bind(...formIds).run();
 };
@@ -1487,7 +1492,7 @@ const deleteForms = async (env: Env, formIds: string[]) => {
 ```typescript
 // ✅ GOOD: Full-text search with D1
 const searchForms = async (env: Env, workspaceId: string, query: string) => {
-  return await env.DB.prepare(`
+  return await getDb(env).prepare(`
     SELECT * FROM forms 
     WHERE workspace_id = ? 
     AND (name LIKE ? OR description LIKE ?)
@@ -1501,7 +1506,7 @@ const searchForms = async (env: Env, workspaceId: string, query: string) => {
 ```typescript
 // ✅ GOOD: Soft delete pattern
 const softDeleteForm = async (env: Env, formId: string) => {
-  await env.DB.prepare(
+  await getDb(env).prepare(
     'UPDATE forms SET deleted_at = ? WHERE id = ?'
   ).bind(Date.now(), formId).run();
   
@@ -1511,7 +1516,7 @@ const softDeleteForm = async (env: Env, formId: string) => {
 
 // Exclude deleted in queries
 const getActiveForms = async (env: Env, workspaceId: string) => {
-  return await env.DB.prepare(
+  return await getDb(env).prepare(
     'SELECT * FROM forms WHERE workspace_id = ? AND deleted_at IS NULL'
   ).bind(workspaceId).all();
 };

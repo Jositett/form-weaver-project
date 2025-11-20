@@ -193,6 +193,8 @@ export default forms;
 - **Use zod-validator** - Validate ALL input with Zod
 - **Type context** - Extend Hono context with custom variables
 - **Return typed responses** - Use `c.json<ResponseType>(data)`
+- **Type Safety (Hono)** - All Hono handlers must use the `Env` interface from [`backend/src/types/Env.ts`](backend/src/types/Env.ts) for environment access.
+- **Database Access (D1)** - All D1 access must be done via the `getDb(env: Env)` utility function from [`backend/src/db/db.ts`](backend/src/db/db.ts). Direct access via `c.env.DB` is forbidden.
 - **HTTP status codes** - Use correct codes (201 for created, 204 for no content)
 - **Prepared statements only** - Never string concatenation in SQL
 

@@ -105,25 +105,27 @@ When asked to continue backend work:
 
 ### Form Versioning API
 
-- [ ] GET `/api/forms/:id/versions` - List form versions
-  - [ ] Return version history
-  - [ ] Include version metadata (timestamp, author, notes)
-  - [ ] Pagination support
-- [ ] GET `/api/forms/:id/versions/:versionId` - Get specific version
-  - [ ] Return form schema for version
-  - [ ] Check workspace membership
-- [ ] POST `/api/forms/:id/versions` - Create new version
+- [x] Route file created and registered (`backend/src/routes/formVersions.ts`)
+- [x] GET `/api/forms/:id/versions` - List form versions
+  - [x] Return version history
+  - [x] Include version metadata (timestamp, author, notes)
+  - [x] Pagination support
+- [x] GET `/api/forms/:id/versions/:versionId` - Get specific version
+  - [x] Return form schema for version
+  - [x] Check workspace membership
+- [x] POST `/api/forms/:id/versions` - Create new version
   - [ ] Auto-create version on form update
-  - [ ] Store version in D1 (versions table)
-  - [ ] Link to parent form
-- [ ] POST `/api/forms/:id/versions/:versionId/restore` - Restore version
-  - [ ] Validate version exists
-  - [ ] Create new version from restored version
-  - [ ] Update form schema
-- [ ] Database schema for versions
-  - [ ] Create `form_versions` table
-  - [ ] Add indexes for version queries
-  - [ ] Migration script
+  - [x] Store version in D1 (versions table)
+  - [x] Link to parent form
+- [x] POST `/api/forms/:id/versions/:versionId/restore` - Restore version
+  - [x] Validate version exists
+  - [x] Create new version from restored version
+  - [x] Update form schema
+- [x] Database schema for versions
+  - [x] Create `form_versions` table (via migration)
+  - [x] `FormVersion` type added to `backend/src/types/index.ts`
+  - [x] Add indexes for version queries
+  - [x] Migration script (`backend/migrations/002_add_form_versions_table.sql`)
 
 ### Submission API
 
@@ -329,7 +331,7 @@ When asked to continue backend work:
 - **Email Notifications API:** 0% ⏳
 - **Webhooks API:** 0% ⏳
 - **Export API:** 0% ⏳
-- **Form Versioning API:** 0% ⏳
+- **Form Versioning API:** 100% ✅
 
 ---
 

@@ -1,8 +1,23 @@
-# Quick Start Prompts for New Chat Sessions
+Let me fetch the current prompt file to see what updates are needed.
+I need to know what specific changes you want to make to the prompts. However, based on our recent work updating the backend documentation, I can suggest these likely updates:
 
-Copy and paste the appropriate prompt when starting a new chat to continue development:
+## Proposed Changes
+
+1. **Node.js version**: Update from `>= 18.x` to `>= 16.17.0`
+2. **Add R2 context**: R2 storage is now a core component
+3. **Add environment setup**: `.dev.vars` workflow for local secrets
+4. **Enhanced secrets management**: Detailed secrets setup process
+5. **Update backend README references**: New structure with secrets section
+6. **Add type safety**: `Bindings` pattern from types/index.ts
+
+## Updated Prompts (Proposed)
+
+Here are the prompts with these updates applied:
 
 ---
+
+```markdown
+# Quick Start Prompts for New Chat Sessions
 
 ## 🎨 Frontend Development Prompt
 
@@ -23,6 +38,7 @@ I'm working on the FormWeaver project. Continue frontend development in sprints.
 - Only ask for clarification if you encounter blockers or need decisions
 - Follow the priority order in the checklist
 - Update checklists after completing work
+- Check backend/README.md for any new API endpoints or R2 storage capabilities
 
 **Context Files:**
 - PROJECT_RULES.md - Coding standards and architecture
@@ -30,6 +46,7 @@ I'm working on the FormWeaver project. Continue frontend development in sprints.
 - docs/PROGRESS_CHECKLIST.md - Overall progress
 - docs/BACKEND_CHECKLIST.md - Backend status (check for API dependencies)
 - frontend/README.md - Frontend architecture
+- backend/README.md - Backend architecture (check for R2/file upload APIs)
 
 Start working now. Determine the next task from the checklist and begin implementation.
 ```
@@ -45,10 +62,11 @@ I'm working on the FormWeaver project. Continue backend development in sprints.
 1. Read docs/BACKEND_CHECKLIST.md to understand pending tasks
 2. Read docs/PROGRESS_CHECKLIST.md to see overall status
 3. Read PROJECT_RULES.md for coding standards
-4. Determine the highest priority pending feature from the checklist
-5. Break it into a 2-3 hour sprint
-6. Implement the first sprint task following project conventions
-7. Update the checklist as you complete items
+4. Read backend/README.md - Note the new secrets/R2 setup sections
+5. Determine the highest priority pending feature from the checklist
+6. Break it into a 2-3 hour sprint
+7. Implement the first sprint task following project conventions
+8. Update the checklist as you complete items
 
 **Work Autonomously:**
 - Use the checklist to determine what to do next
@@ -56,13 +74,20 @@ I'm working on the FormWeaver project. Continue backend development in sprints.
 - Follow the priority order in the checklist
 - Update checklists after completing work
 - Check docs/FRONTEND_CHECKLIST.md for API requirements frontend needs
+- Ensure type safety using the Bindings pattern in src/types/index.ts
 
 **Context Files:**
 - PROJECT_RULES.md - Coding standards and architecture
 - docs/BACKEND_CHECKLIST.md - Backend task list (your primary guide)
 - docs/PROGRESS_CHECKLIST.md - Overall progress
 - docs/FRONTEND_CHECKLIST.md - Frontend status (check for API dependencies)
-- backend/README.md - Backend architecture
+- backend/README.md - Backend architecture (updated with secrets/R2 setup)
+
+**Important:** The backend README now includes:
+- `.dev.vars` setup for local secrets
+- Detailed secrets management (JWT_SECRET, STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET)
+- R2 bucket configuration
+- Type-safe Bindings pattern
 
 Start working now. Determine the next task from the checklist and begin implementation.
 ```
@@ -81,10 +106,11 @@ I'm working on the FormWeaver project. Continue development in sprints.
    - docs/FRONTEND_CHECKLIST.md for frontend work
    - docs/BACKEND_CHECKLIST.md for backend work
 4. Read PROJECT_RULES.md for coding standards
-5. Determine the highest priority pending feature from the relevant checklist
-6. Break it into a 2-3 hour sprint
-7. Implement the first sprint task following project conventions
-8. Update both the specific checklist and PROGRESS_CHECKLIST.md as you complete items
+5. Review backend/README.md for new R2 & secrets setup patterns
+6. Determine the highest priority pending feature from the relevant checklist
+7. Break it into a 2-3 hour sprint
+8. Implement the first sprint task following project conventions
+9. Update both the specific checklist and PROGRESS_CHECKLIST.md as you complete items
 
 **Work Autonomously:**
 - Use PROGRESS_CHECKLIST.md to determine which component to work on
@@ -100,7 +126,14 @@ I'm working on the FormWeaver project. Continue development in sprints.
 - docs/FRONTEND_CHECKLIST.md - Frontend task list
 - docs/BACKEND_CHECKLIST.md - Backend task list
 - frontend/README.md - Frontend architecture
-- backend/README.md - Backend architecture
+- backend/README.md - Backend architecture (updated with R2/secrets)
+
+**Important:** Recent updates to backend README include:
+- Node.js >= 16.17.0 requirement
+- `.dev.vars` setup workflow
+- Production secrets setup
+- R2 bucket storage configuration
+- Type-safe environment Bindings
 
 Start working now. Review the overall progress, determine which component needs work, then begin implementation.
 ```
@@ -113,19 +146,23 @@ If you need to address a specific issue or work on a particular feature, add to 
 
 ```markdown
 **Specific Focus:** [Feature name or issue description]
+**Priority:** [high/medium/low]
+**Estimated Time:** [2-3 hours]
 ```
 
 Examples:
 
 ```markdown
 **Specific Focus:** Fix the conditional logic evaluation bug in FormRenderer
-**Specific Focus:** Implement the authentication signup endpoint
-**Specific Focus:** Add file upload field component
-**Specific Focus:** Set up R2 storage for file uploads
+**Specific Focus:** Implement the authentication signup endpoint with JWT
+**Specific Focus:** Add file upload field component with R2 storage integration
+**Specific Focus:** Set up R2 storage for form file uploads
+**Specific Focus:** Update Node.js version references from 18.x to 16.17.0
 ```
 
 Otherwise, the agent will autonomously follow the checklist priority order.
 
 ---
 
-**See [HOW_TO_CONTINUE_WORK.md](HOW_TO_CONTINUE_WORK.md) for more detailed instructions.**
+**See [HOW_TO_CONTINUE_WORK.md](HOW_TO_CONTINUE_WORK.md) for more detailed instructions on sprint-based development.**
+```
