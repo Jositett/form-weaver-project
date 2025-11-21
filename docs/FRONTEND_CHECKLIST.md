@@ -94,10 +94,10 @@ When asked to continue frontend work:
   - [x] Visual rule preview
   - [x] Delete rule button
   - [x] Test conditions in preview mode (via FormPreview integration)
-- [ ] Conditional logic visualization (Future Enhancement)
-  - [ ] Show conditional rules badge on fields
-  - [ ] Visual indicator when field is conditionally hidden
-  - [ ] Rule summary tooltip
+- [x] Conditional logic visualization
+  - [x] Show conditional rules badge on fields
+  - [x] Visual indicator when field is conditionally hidden
+  - [x] Rule summary tooltip
 - [x] Conditional logic validation
   - [x] Prevent circular dependencies (field can't depend on itself)
   - [x] Validate field references exist (via availableFields filter)
@@ -268,7 +268,7 @@ When asked to continue frontend work:
 
 - **Core Form Builder:** 100% ✅
 - **Field Types:** 100% ✅
-- **Conditional Logic UI:** 85% 🚧
+- **Conditional Logic UI:** 100% ✅
 - **Form Analytics:** 50% 🚧
 - **Email Notifications:** 0% ⏳
 - **Form Versioning:** 0% ⏳
