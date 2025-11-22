@@ -1,0 +1,16 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "shadcn",
+    "lucide",
+    "formweaver",
+    "tailwindcss",
+    "vite",
+    "hono"
+  ],
+  "ignoreWords": [
+    "shadcn",
+    "lucide"
+  ]
+}

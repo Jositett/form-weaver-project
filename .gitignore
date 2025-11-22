@@ -45,6 +45,7 @@ out/
 .settings/
 *.sublime-project
 *.sublime-workspace
+roo-code-settings.json
 
 # OS
 .DS_Store
