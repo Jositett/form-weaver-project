@@ -44,7 +44,7 @@ I'm working on the FormWeaver project. Continue backend development in sprints.
 **Your Task:**
 1. Read docs/BACKEND_CHECKLIST.md to understand pending tasks
 2. Read docs/PROGRESS_CHECKLIST.md to see overall status
-3. Read PROJECT_RULES.md for coding standards
+3. Read PROJECT_R ULES.md for coding standards
 4. Read backend/README.md - Note the new secrets/R2 setup sections
 5. Determine the highest priority pending feature from the checklist
 6. Break it into a 2-3 hour sprint
