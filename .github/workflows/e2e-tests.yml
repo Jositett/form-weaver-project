@@ -1,0 +1,345 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ${{ fromJSON('["ubuntu-latest", "windows-latest", "macos-latest"]')[matrix.os-index] }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os-index: [0, 1, 2]
+        node-version: [20.x]
+        playwright-version: [1.51.0]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: |
+        cd backend
+        npm ci
+      shell: bash
+
+    - name: Install frontend dependencies
+      run: |
+        cd frontend
+        npm ci
+      shell: bash
+
+    - name: Install Playwright Browsers
+      run: |
+        cd frontend
+        npx playwright install --with-deps
+      shell: bash
+
+    - name: Build backend
+      run: |
+        cd backend
+        npm run build
+      shell: bash
+      env:
+        NODE_ENV: test
+        JWT_SECRET: ${{ secrets.JWT_SECRET_TEST || 'test-jwt-secret-key-for-e2e-tests' }}
+        DATABASE_URL: ${{ secrets.DATABASE_URL_TEST || 'file:./test.db' }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME }}
+        R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+        R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+
+    - name: Build frontend
+      run: |
+        cd frontend
+        npm run build
+      shell: bash
+      env:
+        VITE_API_URL: ${{ secrets.VITE_API_URL || 'http://localhost:8787' }}
+        VITE_APP_URL: ${{ secrets.VITE_APP_URL || 'http://localhost:5173' }}
+
+    - name: Start backend server
+      run: |
+        cd backend
+        npm start &
+        echo $! > backend.pid
+        sleep 10
+      shell: bash
+      env:
+        PORT: 8787
+        NODE_ENV: test
+        JWT_SECRET: ${{ secrets.JWT_SECRET_TEST || 'test-jwt-secret-key-for-e2e-tests' }}
+        DATABASE_URL: ${{ secrets.DATABASE_URL_TEST || 'file:./test.db' }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME }}
+        R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+        R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+
+    - name: Start frontend server
+      run: |
+        cd frontend
+        npm run dev &
+        echo $! > frontend.pid
+        sleep 10
+      shell: bash
+      env:
+        PORT: 5173
+        VITE_API_URL: ${{ secrets.VITE_API_URL || 'http://localhost:8787' }}
+        VITE_APP_URL: ${{ secrets.VITE_APP_URL || 'http://localhost:5173' }}
+
+    - name: Wait for services to be ready
+      run: |
+        # Wait for backend
+        for i in {1..30}; do
+          if curl -f http://localhost:8787/health || curl -f http://localhost:8787/; then
+            echo "Backend is ready"
+            break
+          fi
+          if [ $i -eq 30 ]; then
+            echo "Backend failed to start"
+            exit 1
+          fi
+          sleep 2
+        done
+        
+        # Wait for frontend
+        for i in {1..30}; do
+          if curl -f http://localhost:5173/; then
+            echo "Frontend is ready"
+            break
+          fi
+          if [ $i -eq 30 ]; then
+            echo "Frontend failed to start"
+            exit 1
+          fi
+          sleep 2
+        done
+      shell: bash
+
+    - name: Run E2E tests
+      run: |
+        cd frontend
+        npm run test:e2e
+      shell: bash
+      env:
+        VITE_API_URL: ${{ secrets.VITE_API_URL || 'http://localhost:8787' }}
+        VITE_APP_URL: ${{ secrets.VITE_APP_URL || 'http://localhost:5173' }}
+        CI: true
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-report-${{ matrix.os-index }}-${{ github.run_number }}
+        path: frontend/playwright-report/
+        retention-days: 30
+
+    - name: Upload test videos
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: playwright-videos-${{ matrix.os-index }}-${{ github.run_number }}
+        path: frontend/test-results/
+        retention-days: 7
+
+    - name: Upload test screenshots
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: playwright-screenshots-${{ matrix.os-index }}-${{ github.run_number }}
+        path: frontend/test-results/
+        retention-days: 7
+
+    - name: Stop servers
+      run: |
+        if [ -f backend/backend.pid ]; then
+          kill $(cat backend/backend.pid) || true
+        fi
+        if [ -f frontend/frontend.pid ]; then
+          kill $(cat frontend/frontend.pid) || true
+        fi
+        sleep 2
+      shell: bash
+      if: always()
+
+  test-mobile:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        device: [mobile, tablet]
+        browser: [chromium, webkit]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: |
+        cd backend
+        npm ci
+        cd ../frontend
+        npm ci
+        npx playwright install --with-deps
+
+    - name: Build and start services
+      run: |
+        cd backend
+        npm run build
+        npm start &
+        cd ../frontend
+        npm run build
+        npm run dev &
+        sleep 15
+      env:
+        PORT: 8787
+        VITE_API_URL: 'http://localhost:8787'
+        VITE_APP_URL: 'http://localhost:5173'
+
+    - name: Wait for services
+      run: |
+        timeout 60 bash -c 'until curl -f http://localhost:8787/; do sleep 2; done'
+        timeout 60 bash -c 'until curl -f http://localhost:5173/; do sleep 2; done'
+
+    - name: Run mobile/tablet tests
+      run: |
+        cd frontend
+        npm run test:e2e -- --project=${{ matrix.browser }}-${{ matrix.device }}
+      env:
+        CI: true
+
+    - name: Upload mobile test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-mobile-report-${{ matrix.device }}-${{ matrix.browser }}
+        path: frontend/playwright-report/
+        retention-days: 30
+
+    - name: Stop servers
+      run: |
+        pkill -f "npm start" || true
+        pkill -f "npm run dev" || true
+      if: always()
+
+  test-visual-regression:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: |
+        cd backend
+        npm ci
+        cd ../frontend
+        npm ci
+        npx playwright install --with-deps
+
+    - name: Build and start services
+      run: |
+        cd backend
+        npm run build
+        npm start &
+        cd ../frontend
+        npm run build
+        npm run dev &
+        sleep 15
+      env:
+        PORT: 8787
+        VITE_API_URL: 'http://localhost:8787'
+        VITE_APP_URL: 'http://localhost:5173'
+
+    - name: Run visual regression tests
+      run: |
+        cd frontend
+        npm run test:e2e -- --grep "@visual"
+      env:
+        CI: true
+
+    - name: Upload visual diff results
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: playwright-visual-diff
+        path: frontend/test-results/
+        retention-days: 7
+
+    - name: Stop servers
+      run: |
+        pkill -f "npm start" || true
+        pkill -f "npm run dev" || true
+      if: always()
+
+  # Performance testing job
+  test-performance:
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: |
+        cd backend
+        npm ci
+        cd ../frontend
+        npm ci
+        npx playwright install --with-deps
+
+    - name: Build and start services
+      run: |
+        cd backend
+        npm run build
+        npm start &
+        cd ../frontend
+        npm run build
+        npm run dev &
+        sleep 15
+      env:
+        PORT: 8787
+        VITE_API_URL: 'http://localhost:8787'
+        VITE_APP_URL: 'http://localhost:5173'
+
+    - name: Run performance tests
+      run: |
+        cd frontend
+        npm run test:e2e -- --grep "@performance"
+      env:
+        CI: true
+
+    - name: Stop servers
+      run: |
+        pkill -f "npm start" || true
+        pkill -f "npm run dev" || true
+      if: always()
