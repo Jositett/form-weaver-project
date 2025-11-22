@@ -406,5 +406,5 @@ When asked to continue backend work:
 
 ---
 
-**Last Updated:** 2025-01-16  
-**Next Review:** 2025-01-23
+**Last Updated:** 2025-11-22
+**Next Review:** 2025-11-29
