@@ -9,6 +9,7 @@ This guide explains how to instruct an AI agent to pick up where you left off, e
 Use this template when starting a new chat session. The agent will determine what to do from the checklist:
 
 ### For Frontend Work
+
 ```
 I'm working on the FormWeaver project. Continue frontend development in sprints.
 
@@ -31,6 +32,7 @@ Start working now. Determine the next task from the checklist and begin implemen
 ```
 
 ### For Backend Work
+
 ```
 I'm working on the FormWeaver project. Continue backend development in sprints.
 
@@ -155,12 +157,14 @@ Start the sprint now.
 Always reference these files for context:
 
 ### Essential Files
+
 1. **PROJECT_RULES.md** - Coding standards, architecture rules
 2. **docs/PROGRESS_CHECKLIST.md** - Overall project status
 3. **docs/FRONTEND_CHECKLIST.md** - Detailed frontend tasks
 4. **frontend/README.md** - Frontend architecture and setup
 
 ### Supporting Files
+
 - **docs/DEV_RULES.md** - Detailed development rules
 - **docs/PRD.md** - Product requirements
 - **docs/BACKEND_CHECKLIST.md** - Backend status (for API dependencies)
@@ -220,24 +224,28 @@ Start with sprint 1: Conditional Logic UI - Rule Builder Interface
 ## 🎨 Best Practices
 
 ### 1. Be Specific About Scope
+
 ```
 ❌ "Continue frontend work"
 ✅ "Continue frontend work on Conditional Logic UI - implement the rule builder interface component"
 ```
 
 ### 2. Reference Checklists
+
 ```
 ❌ "Add file upload"
 ✅ "Implement File Upload Fields from docs/FRONTEND_CHECKLIST.md, starting with the FileUploadField component"
 ```
 
 ### 3. Set Sprint Boundaries
+
 ```
 ❌ "Work on analytics"
 ✅ "Sprint: Build the Analytics Dashboard page component (2-3 hours). Include chart setup and data fetching structure."
 ```
 
 ### 4. Request Progress Updates
+
 ```
 "After completing this sprint, update docs/FRONTEND_CHECKLIST.md to reflect progress"
 ```
@@ -260,21 +268,25 @@ After completing this sprint, please:
 ## 🔗 Quick Reference Commands
 
 ### Start New Sprint
+
 ```
 New frontend sprint: [Feature] from FRONTEND_CHECKLIST.md
 ```
 
 ### Continue Sprint
+
 ```
 Continue frontend sprint: [Feature] - next task is [specific task]
 ```
 
 ### Review Progress
+
 ```
 Review frontend progress from FRONTEND_CHECKLIST.md and suggest next sprint
 ```
 
 ### Complete Feature
+
 ```
 Complete [Feature] from FRONTEND_CHECKLIST.md. Work through all remaining tasks in sprints.
 ```
@@ -329,4 +341,3 @@ Start the sprint now.
 
 **Last Updated:** 2025-01-16  
 **Purpose:** Help developers continue work across chat sessions
-

@@ -44,7 +44,7 @@ This guide covers all methods for embedding FormWeaver forms into your website o
 
 ### 3.2 With Options
 ```html
-<iframe 
+<iframe
   src="https://forms.FormWeaver.app/f/form_abc123xyz?theme=dark&hideHeader=true"
   width="100%"
   height="600"
@@ -62,6 +62,49 @@ This guide covers all methods for embedding FormWeaver forms into your website o
 - `fontFamily` - URL-encoded font name (e.g., `Inter`)
 - `language` - `en` | `es` | `fr` | `de` (default: `en`)
 - `prefill` - JSON object for pre-filling fields (URL-encoded)
+
+### 3.3 Marketplace Embedding Options
+```html
+<!-- Creator-attributed embed -->
+<iframe
+  src="https://forms.FormWeaver.app/f/form_abc123xyz?creatorAttribution=true&showReviews=true"
+  width="100%"
+  height="700"
+  frameborder="0"
+  allow="clipboard-write"
+  sandbox="allow-scripts allow-same-origin allow-forms"
+></iframe>
+
+<!-- Student creator highlight embed -->
+<iframe
+  src="https://forms.FormWeaver.app/f/form_abc123xyz?studentCreatorBadge=true&mentorshipCTA=true"
+  width="100%"
+  height="700"
+  frameborder="0"
+  allow="clipboard-write"
+  sandbox="allow-scripts allow-same-origin allow-forms"
+></iframe>
+
+<!-- Marketplace integration embed -->
+<iframe
+  src="https://forms.FormWeaver.app/marketplace/embed?category=healthcare&creatorType=student"
+  width="100%"
+  height="800"
+  frameborder="0"
+  allow="clipboard-write"
+  sandbox="allow-scripts allow-same-origin allow-forms"
+></iframe>
+```
+
+**Marketplace Query Parameters:**
+- `creatorAttribution` - `true` | `false` (default: `false`) - Shows creator credit and profile link
+- `showReviews` - `true` | `false` (default: `false`) - Displays template rating and review summary
+- `studentCreatorBadge` - `true` | `false` (default: `false`) - Highlights student creator with verification badge
+- `mentorshipCTA` - `true` | `false` (default: `false`) - Shows mentorship program promotion
+- `category` - Filter templates by category (e.g., `healthcare`, `business`, `education`)
+- `creatorType` - Filter by creator type (`student`, `verified`, `pro`)
+- `showPricing` - `true` | `false` (default: `true`) - Display template pricing information
+- `allowPurchase` - `true` | `false` (default: `true`) - Enable "Buy Template" CTA for premium templates
 
 **Example with prefill:**
 ```html
@@ -120,9 +163,211 @@ This guide covers all methods for embedding FormWeaver forms into your website o
 
 ---
 
-## 4. Method 2: JavaScript SDK
+## 4. Method 3: Marketplace Embedding Integration
 
-### 4.1 Installation
+### 4.1 Template Marketplace Browsing
+```html
+<div id="marketplace-container"></div>
+
+<script src="https://cdn.FormWeaver.app/marketplace-sdk.min.js"></script>
+<script>
+  FormWeaverMarketplace.render({
+    container: '#marketplace-container',
+    category: 'healthcare',
+    creatorType: 'student',
+    showFilters: true,
+    showRatings: true,
+    onTemplateSelect: (template) => {
+      console.log('Selected template:', template);
+      // Handle template selection
+    },
+    onCreatorClick: (creator) => {
+      console.log('Viewing creator:', creator);
+      // Navigate to creator profile
+    }
+  });
+</script>
+```
+
+### 4.2 Creator Attribution Integration
+```javascript
+FormWeaver.render({
+  formId: 'form_abc123xyz',
+  container: '#form-container',
+  creatorAttribution: {
+    enabled: true,
+    showProfileLink: true,
+    showCommissionInfo: true, // Shows revenue sharing disclosure
+    attributionPosition: 'bottom', // 'top', 'bottom', 'sidebar'
+    customMessage: 'Template by {creatorName} - {commissionPercentage}% goes to creator'
+  },
+  marketplaceIntegration: {
+    showTemplateInfo: true,
+    showSimilarTemplates: true,
+    enablePurchaseCTA: true,
+    showCreatorStats: true
+  }
+});
+```
+
+### 4.3 Student Creator Promotion
+```javascript
+FormWeaver.render({
+  formId: 'form_abc123xyz',
+  container: '#form-container',
+  studentCreatorFeatures: {
+    showStudentBadge: true,
+    showMentorshipCTA: true,
+    showPortfolioLink: true,
+    showDiscountPromo: true, // Educational discounts
+    enableSkillTracking: true
+  },
+  mentorshipIntegration: {
+    showProgramInfo: true,
+    enableApplication: true,
+    showSuccessStories: true
+  }
+});
+```
+
+### 4.4 Template Rating and Review Display
+```javascript
+FormWeaver.render({
+  formId: 'form_abc123xyz',
+  container: '#form-container',
+  reviews: {
+    enabled: true,
+    showAverageRating: true,
+    showReviewCount: true,
+    showRecentReviews: 5,
+    enableReviewSubmission: true,
+    reviewVerification: true
+  }
+});
+```
+
+### 4.5 Revenue Sharing Disclosure
+```javascript
+FormWeaver.render({
+  formId: 'form_abc123xyz',
+  container: '#form-container',
+  revenueDisclosure: {
+    enabled: true,
+    showCreatorEarnings: true, // "$35.77 earned by creator"
+    showPlatformFee: true, // "$13.23 platform fee"
+    showCommissionRate: true, // "73% goes to creator"
+    disclosurePosition: 'footer',
+    legalCompliance: true
+  }
+});
+```
+
+---
+
+## 5. Method 4: JavaScript SDK
+
+### 4.1 Template Marketplace Browsing
+```html
+<div id="marketplace-container"></div>
+
+<script src="https://cdn.FormWeaver.app/marketplace-sdk.min.js"></script>
+<script>
+  FormWeaverMarketplace.render({
+    container: '#marketplace-container',
+    category: 'healthcare',
+    creatorType: 'student',
+    showFilters: true,
+    showRatings: true,
+    onTemplateSelect: (template) => {
+      console.log('Selected template:', template);
+      // Handle template selection
+    },
+    onCreatorClick: (creator) => {
+      console.log('Viewing creator:', creator);
+      // Navigate to creator profile
+    }
+  });
+</script>
+```
+
+### 4.2 Creator Attribution Integration
+```javascript
+FormWeaver.render({
+  formId: 'form_abc123xyz',
+  container: '#form-container',
+  creatorAttribution: {
+    enabled: true,
+    showProfileLink: true,
+    showCommissionInfo: true, // Shows revenue sharing disclosure
+    attributionPosition: 'bottom', // 'top', 'bottom', 'sidebar'
+    customMessage: 'Template by {creatorName} - {commissionPercentage}% goes to creator'
+  },
+  marketplaceIntegration: {
+    showTemplateInfo: true,
+    showSimilarTemplates: true,
+    enablePurchaseCTA: true,
+    showCreatorStats: true
+  }
+});
+```
+
+### 4.3 Student Creator Promotion
+```javascript
+FormWeaver.render({
+  formId: 'form_abc123xyz',
+  container: '#form-container',
+  studentCreatorFeatures: {
+    showStudentBadge: true,
+    showMentorshipCTA: true,
+    showPortfolioLink: true,
+    showDiscountPromo: true, // Educational discounts
+    enableSkillTracking: true
+  },
+  mentorshipIntegration: {
+    showProgramInfo: true,
+    enableApplication: true,
+    showSuccessStories: true
+  }
+});
+```
+
+### 4.4 Template Rating and Review Display
+```javascript
+FormWeaver.render({
+  formId: 'form_abc123xyz',
+  container: '#form-container',
+  reviews: {
+    enabled: true,
+    showAverageRating: true,
+    showReviewCount: true,
+    showRecentReviews: 5,
+    enableReviewSubmission: true,
+    reviewVerification: true
+  }
+});
+```
+
+### 4.5 Revenue Sharing Disclosure
+```javascript
+FormWeaver.render({
+  formId: 'form_abc123xyz',
+  container: '#form-container',
+  revenueDisclosure: {
+    enabled: true,
+    showCreatorEarnings: true, // "$35.77 earned by creator"
+    showPlatformFee: true, // "$13.23 platform fee"
+    showCommissionRate: true, // "73% goes to creator"
+    disclosurePosition: 'footer',
+    legalCompliance: true
+  }
+});
+```
+
+---
+
+## 5. Method 4: JavaScript SDK
+
+### 6.1 Installation
 
 **CDN (no build step) - Served from Cloudflare:**
 ```html
@@ -133,10 +378,10 @@ This guide covers all methods for embedding FormWeaver forms into your website o
 
 **NPM (for bundlers):**
 ```bash
-npm install @FormWeaver/sdk
+npm install @FormWeaver/sdk @FormWeaver/marketplace
 ```
 
-### 4.2 Basic Usage
+### 6.2 Basic Usage
 ```html
 <!DOCTYPE html>
 <html>
@@ -163,7 +408,7 @@ npm install @FormWeaver/sdk
 </html>
 ```
 
-### 4.3 With Options
+### 6.3 With Options
 ```javascript
 FormWeaver.render({
   formId: 'form_abc123xyz',
@@ -224,7 +469,7 @@ FormWeaver.render({
 });
 ```
 
-### 4.5 Programmatic Control
+### 6.4 Programmatic Control
 ```javascript
 const form = FormWeaver.render({ 
   formId: 'form_abc123xyz', 
@@ -270,7 +515,70 @@ form.setDisabled(true);
 form.destroy();
 ```
 
-### 4.6 Error Handling
+### 6.5 Error Handling
+
+### 6.6 Marketplace-Specific Options
+```javascript
+FormWeaver.render({
+  formId: 'form_abc123xyz',
+  container: '#form-container',
+  
+  // Creator Attribution
+  creatorAttribution: {
+    enabled: true,
+    creatorId: 'creator_123',
+    creatorName: 'Jane Doe',
+    creatorProfileUrl: 'https://formweaver.com/creator/jane-doe',
+    showCommissionInfo: true,
+    attributionStyle: 'minimal' // 'minimal', 'detailed', 'banner'
+  },
+  
+  // Marketplace Integration
+  marketplace: {
+    templateId: 'template_456',
+    categoryId: 'healthcare',
+    showSimilarTemplates: true,
+    enableTemplatePurchase: true,
+    showCreatorPortfolio: true,
+    templateRating: 4.8,
+    templateReviewCount: 127
+  },
+  
+  // Student Creator Features
+  studentCreator: {
+    isStudent: true,
+    showStudentBadge: true,
+    showMentorshipInfo: true,
+    educationalDiscount: true,
+    portfolioUrl: 'https://formweaver.com/student/jane-doe'
+  },
+  
+  // Revenue Sharing
+  revenueSharing: {
+    creatorCommission: 73,
+    platformFee: 27,
+    showEarningsBreakdown: true,
+    showTransparencyInfo: true
+  }
+});
+```
+
+### 6.7 Creator Analytics Tracking
+```javascript
+FormWeaver.render({
+  formId: 'form_abc123xyz',
+  container: '#form-container',
+  analytics: {
+    creatorId: 'creator_123',
+    templateId: 'template_456',
+    trackEmbedViews: true,
+    trackFormSubmissions: true,
+    trackTemplatePurchases: true,
+    trackCreatorAttributionClicks: true,
+    enablePerformanceMetrics: true
+  }
+});
+```
 ```javascript
 FormWeaver.render({
   formId: 'form_abc123xyz',
@@ -1016,9 +1324,229 @@ Monitor failed webhooks in dashboard → Settings → Webhooks → Failed Delive
 
 ---
 
-## 9. Styling & Customization
+## 12. Legal & Compliance for Marketplace
 
-### 9.1 CSS Injection (JavaScript SDK)
+### 12.1 Creator Rights & Licensing
+All embedded templates must display proper licensing information:
+
+```html
+<div class="formweaver-licensing-info">
+  <p>Template by <a href="https://formweaver.com/creator/jane-doe">Jane Doe</a></p>
+  <p>Creator Commission: 73% of template sales</p>
+  <p>License: Single use per domain</p>
+</div>
+```
+
+### 12.2 Revenue Sharing Transparency
+```javascript
+FormWeaver.render({
+  formId: 'form_abc123xyz',
+  container: '#form-container',
+  licensing: {
+    showCreatorEarnings: true,
+    showPlatformFee: true,
+    showCommissionRate: true,
+    showUsageTerms: true,
+    creatorRightsNotice: true
+  }
+});
+```
+
+**Required Disclosures:**
+- Creator name and profile link
+- Commission percentage (50-73% based on creator tier)
+- License terms (single use, multi-domain, etc.)
+- Platform fee structure
+- Data retention policy
+
+### 12.3 GDPR Compliance for Marketplace Data
+```javascript
+FormWeaver.render({
+  formId: 'form_abc123xyz',
+  container: '#form-container',
+  gdprCompliance: {
+    showDataRetentionNotice: true,
+    enableRightToErasure: true,
+    showLegalBasis: true,
+    includeConsentCheckbox: true,
+    retentionPeriod: '30 days'
+  }
+});
+```
+
+### 12.4 Industry-Specific Compliance
+```javascript
+// HIPAA-compliant medical forms
+FormWeaver.render({
+  formId: 'medical_form_abc',
+  container: '#form-container',
+  compliance: {
+    industry: 'healthcare',
+    hipaaCompliant: true,
+    businessAssociateAgreement: true,
+    dataEncryption: true,
+    auditLogging: true,
+    retentionPeriod: '7 years'
+  }
+});
+
+// SOX-compliant financial forms
+FormWeaver.render({
+  formId: 'financial_form_xyz',
+  container: '#form-container',
+  compliance: {
+    industry: 'financial',
+    soxCompliant: true,
+    auditTrail: true,
+    dataIntegrity: true,
+    retentionPeriod: '7 years'
+  }
+});
+```
+
+---
+
+## 13. Analytics & Tracking
+
+### 13.1 Google Analytics 4
+```javascript
+FormWeaver.render({
+  formId: 'form_abc123xyz',
+  container: '#app',
+  onLoad: () => {
+    // Track form view
+    gtag('event', 'form_view', {
+      form_id: 'form_abc123xyz',
+      form_name: 'Contact Form'
+    });
+  },
+  onSubmit: (data) => {
+    // Track form submission with creator attribution
+    gtag('event', 'form_submit', {
+      form_id: 'form_abc123xyz',
+      form_name: 'Contact Form',
+      submission_id: data.id,
+      creator_id: data.templateCreatorId,
+      template_id: data.templateId,
+      creator_earnings: data.creatorEarnings
+    });
+    
+    // Track template performance
+    gtag('event', 'template_submission', {
+      event_category: 'marketplace',
+      event_label: data.templateId,
+      value: data.creatorEarnings
+    });
+  },
+  onChange: (fieldId, value) => {
+    // Track field interactions
+    gtag('event', 'form_field_change', {
+      form_id: 'form_abc123xyz',
+      field_id: fieldId
+    });
+  }
+});
+```
+
+### 13.2 Plausible Analytics
+```javascript
+FormWeaver.render({
+  formId: 'form_abc123xyz',
+  container: '#app',
+  onSubmit: (data) => {
+    // Track custom event in Plausible with creator info
+    plausible('Form Submit', {
+      props: {
+        form: 'Contact Form',
+        submissionId: data.id,
+        creatorId: data.templateCreatorId,
+        creatorCommission: data.creatorCommission
+      }
+    });
+    
+    // Track marketplace metrics
+    plausible('Template Submission', {
+      props: {
+        templateId: data.templateId,
+        creatorEarnings: data.creatorEarnings,
+        platformFee: data.platformFee
+      }
+    });
+  }
+});
+```
+
+### 13.3 Segment
+```javascript
+FormWeaver.render({
+  formId: 'form_abc123xyz',
+  container: '#app',
+  onSubmit: (data) => {
+    // Track in Segment with marketplace context
+    analytics.track('Form Submitted', {
+      formId: 'form_abc123xyz',
+      formName: 'Contact Form',
+      submissionId: data.id,
+      fields: Object.keys(data.values),
+      marketplace: {
+        templateId: data.templateId,
+        creatorId: data.templateCreatorId,
+        creatorCommissionRate: data.creatorCommissionRate,
+        creatorEarnings: data.creatorEarnings,
+        platformFee: data.platformFee,
+        licenseType: data.licenseType
+      }
+    });
+    
+    // Identify creator if applicable
+    if (data.templateCreatorId) {
+      analytics.identify(`creator_${data.templateCreatorId}`, {
+        creatorId: data.templateCreatorId,
+        creatorType: data.creatorType,
+        totalEarnings: data.totalCreatorEarnings,
+        templateCount: data.creatorTemplateCount
+      });
+    }
+  }
+});
+```
+
+### 13.4 Creator-Specific Analytics
+```javascript
+FormWeaver.render({
+  formId: 'form_abc123xyz',
+  container: '#form-container',
+  onSubmit: (data) => {
+    // Track creator attribution metrics
+    console.log('Template metrics:', {
+      creatorId: data.templateCreatorId,
+      templateId: data.templateId,
+      creatorEarnings: data.creatorEarnings,
+      platformFee: data.platformFee,
+      submissionTimestamp: Date.now()
+    });
+    
+    // Send to creator analytics endpoint
+    fetch('/api/creator/analytics', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        creatorId: data.templateCreatorId,
+        templateId: data.templateId,
+        eventType: 'submission',
+        earnings: data.creatorEarnings,
+        metadata: {
+          userAgent: navigator.userAgent,
+          referrer: document.referrer,
+          timestamp: new Date().toISOString()
+        }
+      })
+    });
+  }
+});
+```
+
+### 13.5 Custom Events
 ```javascript
 FormWeaver.render({
   formId: 'form_abc123xyz',
@@ -1065,7 +1593,7 @@ FormWeaver.render({
 });
 ```
 
-### 9.2 CSS Variables
+### 14. Styling & Customization
 ```css
 :root {
   /* Colors */
@@ -1159,7 +1687,7 @@ FormWeaver.render({
 
 ## 10. Security Best Practices
 
-### 10.1 API Keys
+### 15.1 API Keys
 
 **Public vs Private Keys:**
 ```javascript
@@ -1223,7 +1751,7 @@ console.log('Reset:', response.headers.get('X-RateLimit-Reset'));
 - Business Plan: 100 submissions per IP per 10 minutes
 - Enterprise Plan: Custom rate limits
 
-### 10.4 CAPTCHA (Spam Protection)
+### 15.4 CAPTCHA (Spam Protection)
 
 **reCAPTCHA v3:**
 ```javascript
@@ -1263,7 +1791,165 @@ FormWeaver.render({
 });
 ```
 
-### 10.5 Content Security Policy
+### 15.5 Content Security Policy for Marketplace
+
+**Enhanced CSP Headers for Marketplace:**
+```html
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' https://cdn.FormWeaver.app https://challenges.cloudflare.com https://js.stripe.com;
+  connect-src 'self' https://api.FormWeaver.app https://api.stripe.com https://hooks.stripe.com;
+  img-src 'self' data: https: blob:;
+  style-src 'self' 'unsafe-inline' https://cdn.FormWeaver.app;
+  frame-src https://forms.FormWeaver.app https://js.stripe.com;
+  frame-ancestors 'none';
+  object-src 'none';
+  base-uri 'self';
+">
+```
+
+### 15.6 Marketplace-Specific Security
+```javascript
+FormWeaver.render({
+  formId: 'form_abc123xyz',
+  container: '#form-container',
+  security: {
+    // Creator verification
+    verifyCreatorSignature: true,
+    checkTemplateIntegrity: true,
+    
+    // Payment security
+    enableStripeElements: true,
+    securePaymentFlow: true,
+    
+    // Data protection
+    encryptSensitiveData: true,
+    maskPII: false, // Show for legitimate business use
+    
+    // Fraud prevention
+    enableCreatorFraudDetection: true,
+    verifyTemplateOwnership: true
+  }
+});
+```
+
+---
+
+## 16. Performance Optimization for Marketplace
+
+### 16.1 Lazy Loading for Marketplace Assets
+```javascript
+// Load marketplace SDK only when needed
+const marketplaceObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      loadMarketplaceSDK();
+      marketplaceObserver.disconnect();
+    }
+  });
+});
+
+marketplaceObserver.observe(document.querySelector('#marketplace-container'));
+
+function loadMarketplaceSDK() {
+  const script = document.createElement('script');
+  script.src = 'https://cdn.FormWeaver.app/marketplace-sdk.min.js';
+  script.onload = () => {
+    FormWeaverMarketplace.render({
+      container: '#marketplace-container',
+      lazyLoadTemplates: true,
+      enableImageOptimization: true
+    });
+  };
+  document.body.appendChild(script);
+}
+```
+
+### 16.2 Preconnect to Marketplace APIs
+```html
+<head>
+  <!-- Preconnect to marketplace services -->
+  <link rel="preconnect" href="https://api.FormWeaver.app">
+  <link rel="dns-prefetch" href="https://api.FormWeaver.app">
+  <link rel="preconnect" href="https://marketplace.FormWeaver.app">
+  <link rel="dns-prefetch" href="https://marketplace.FormWeaver.app">
+  
+  <!-- Preload critical marketplace assets -->
+  <link rel="preload" href="https://cdn.FormWeaver.app/marketplace-sdk.min.js" as="script">
+  <link rel="preload" href="https://cdn.FormWeaver.app/creator-avatars.css" as="style">
+</head>
+```
+
+### 16.3 Edge Caching for Creator Content
+```javascript
+// Cache creator profiles and templates at edge
+async function getCreatorContent(creatorId, templateId) {
+  const cacheKey = `creator_${creatorId}_template_${templateId}`;
+  const cached = await caches.match(cacheKey);
+  if (cached) return cached.json();
+  
+  // Fetch creator and template data
+  const [creatorResponse, templateResponse] = await Promise.all([
+    fetch(`https://api.FormWeaver.app/v1/creators/${creatorId}`),
+    fetch(`https://api.FormWeaver.app/v1/templates/${templateId}`)
+  ]);
+  
+  const creatorData = await creatorResponse.json();
+  const templateData = await templateResponse.json();
+  
+  // Cache for 30 minutes
+  const cache = await caches.open('creator-content');
+  cache.put(cacheKey, new Response(JSON.stringify({ creatorData, templateData })));
+  
+  return { creatorData, templateData };
+}
+```
+
+### 16.4 Optimized Image Loading for Creator Avatars
+```css
+/* Lazy load creator avatars */
+.creator-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  loading: lazy;
+  background-color: #f3f4f6;
+}
+
+/* Progressive image loading */
+.creator-avatar-placeholder {
+  background: linear-gradient(45deg, #f3f4f6 25%, #e5e7eb 25%, #e5e7eb 50%, #f3f4f6 50%);
+  background-size: 4px 4px;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
+}
+```
+
+### 16.5 Template Bundle Optimization
+```javascript
+// Only load necessary template features
+FormWeaver.render({
+  formId: 'form_abc123xyz',
+  container: '#form-container',
+  performance: {
+    // Conditional feature loading
+    loadCreatorAttribution: true,
+    loadTemplateReviews: window.innerWidth > 768, // Only on desktop
+    loadSimilarTemplates: true,
+    loadPurchaseCTA: true,
+    
+    // Bundle optimization
+    treeShakeUnusedFeatures: true,
+    compressAssets: true,
+    optimizeImages: true
+  }
+});
+```
 
 **Recommended CSP Headers:**
 ```html

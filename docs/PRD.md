@@ -1,720 +1,622 @@
 # Product Requirements Document (PRD)
-## FormWeaver SaaS (Cloudflare Workers Edition)
+## FormWeaver: Student Template Marketplace & Employment Platform
 
-**Version:** 2.0  
-**Last Updated:** 2025-11-16  
+**Version:** 3.0  
+**Last Updated:** 2025-11-23  
 **Product Owner:** TBD  
-**Status:** In Development  
-**Infrastructure:** Cloudflare Workers + Hono + D1
+**Status:** Redesign Phase  
+**Mission:** Empower student employment through template creation marketplace  
 
 ---
 
 ## 1. Executive Summary
 
 ### 1.1 Product Vision
-A powerful, embeddable FormWeaver built on Cloudflare's global edge network, allowing SaaS companies and developers to integrate a no-code form creation tool directly into their applications with <50ms latency worldwide. Users can design forms with drag-and-drop, collect responses, and extend functionality with custom input elements.
+Transform FormWeaver from an enterprise SaaS tool into a student-focused template marketplace that creates meaningful employment opportunities for students worldwide. Our platform enables students to monetize their design and technical skills by creating and selling form templates while providing affordable, high-quality solutions to small businesses and organizations.
 
-### 1.2 Target Users
-- **Primary:** SaaS developers who need form building capabilities in their apps
-- **Secondary:** Enterprise teams building internal tools
-- **Tertiary:** Agencies managing multiple client forms
+### 1.2 Mission Statement
+**"Empowering students through template creation: Building skills, generating income, and creating social impact."**
 
-### 1.3 Key Differentiators
-- **Edge-first architecture** - <50ms global latency via Cloudflare Workers
-- **Embeddable widget** with white-label options
-- **Custom element plugin system** for unlimited extensibility
-- **Multi-tenant architecture** with workspace isolation
-- **React, Vue, and vanilla JS SDKs**
-- **Usage-based pricing** that scales with customer needs
-- **99.99% uptime** on Cloudflare's global network
+### 1.3 Target Users
+- **Primary:** Student creators (ages 16-28) seeking flexible employment
+- **Secondary:** Small businesses, freelancers, and nonprofits needing affordable templates
+- **Tertiary:** Educational institutions and training programs
+- **Admin:** Platform moderators and compliance officers
 
----
-
-## 2. Core Features
-
-### 2.1 MVP Features (v1.0) - Weeks 1-4
-
-#### Form Designer (Frontend)
-- ✅ Drag-and-drop interface with 4-panel layout
-- ✅ Support for 12 standard HTML5 input types
-- ✅ Real-time preview pane
-- ✅ Property editor for field configuration
-- ✅ JSON schema export/import
-- ✅ Required field validation
-- ✅ Min/max length validation
-- [ ] Form templates (Blank, Contact, Survey, Registration)
-- [ ] Undo/redo functionality (Ctrl+Z, Ctrl+Y)
-- [ ] Keyboard shortcuts for power users (Delete, Duplicate)
-- [ ] Field duplication
-- [ ] Form title/description editor
-
-#### Field Types (Standard)
-- ✅ Text, Email, Password, Number, Tel, URL
-- ✅ Date, Time, Textarea
-- ✅ Select (single/multiple)
-- ✅ Radio buttons, Checkboxes
-- [ ] File upload (single/multiple) - Using R2 Storage
-- [ ] Range slider
-- [ ] Color picker
-
-#### Validation (Backend: Cloudflare Workers)
-- ✅ Required fields (client-side)
-- ✅ Min/max length (client-side)
-- ✅ Min/max value (client-side)
-- [ ] Pattern matching (regex) - Server-side validation
-- [ ] Email validation (server-side)
-- [ ] Phone number validation (server-side)
-- [ ] URL validation (server-side)
-- [ ] Custom error messages per validation rule
-- [ ] Cross-field validation (e.g., password confirmation)
-
-#### Form Management (Hono API)
-- [ ] Save forms to D1 database
-- [ ] Auto-save every 30 seconds
-- [ ] Manual save button (Ctrl+S)
-- [ ] Save status indicator ("Saving...", "Saved", "Error")
-- [ ] Load existing form in designer
-- [ ] List all forms (table view with pagination)
-- [ ] Edit existing forms
-- [ ] Delete forms (with confirmation)
-- [ ] Duplicate forms
-- [ ] Form status toggle (Draft/Published)
-- [ ] Search/filter forms
-
-#### Data Collection (Cloudflare Workers)
-- [ ] Public form page (`/f/:formId`) served from edge
-- [ ] Submit form responses to Workers API
-- [ ] Store submissions in D1 database
-- [ ] Rate limiting (10 submissions per IP per 10 minutes)
-- [ ] Capture metadata (IP, user agent, timestamp)
-- [ ] Handle large text fields (10,000+ chars)
-- [ ] View submissions table (paginated)
-- [ ] Export submissions (CSV) - Generated via Workers Streams
-- [ ] Export submissions (JSON) - Gzipped for large datasets
-- [ ] Delete submissions
-- [ ] Filter by date range
-- [ ] Search submissions
-
-#### Embedding
-- [ ] Generate embeddable iframe code
-- [ ] iframe URL with query params (theme, colors, etc.)
-- [ ] Copy to clipboard button
-- [ ] Auto-resize iframe script
-- [ ] JavaScript SDK (vanilla) - Hosted on Workers
-- [ ] React component SDK
-- [ ] Vue component SDK
-- [ ] CORS configuration via Workers middleware
-- [ ] Webhook configuration for submissions
-
-#### Authentication & Multi-tenancy (JWT + D1)
-- [ ] User authentication (email/password) - JWT tokens
-- [ ] Password hashing with bcrypt
-- [ ] Email verification tokens (stored in KV with TTL)
-- [ ] Password reset tokens (stored in KV with TTL)
-- [ ] Create first workspace automatically on signup
-- [ ] Workspace creation
-- [ ] Workspace switching UI
-- [ ] Team member invitations
-- [ ] Role-based access control (Owner, Admin, Editor, Viewer)
-- [ ] Security definer functions for role checks
+### 1.4 Key Differentiators
+- **Student Employment Focus:** 50-73% revenue sharing to creators
+- **Low-Cost Accessibility:** Freemium model with student discounts
+- **Template Marketplace:** Curated collection of industry-specific templates
+- **Edge-Optimized Performance:** Cloudflare Workers for global <50ms latency
+- **Compliance-First:** Automatic data deletion and GDPR compliance
+- **Social Impact:** Measurable student employment outcomes
 
 ---
 
-### 2.2 Phase 2 Features (v2.0) - Weeks 5-10
+## 2. User Personas
 
-#### Custom Elements System (Sandboxed in Workers)
-- [ ] Custom element registry UI
-- [ ] Upload custom JavaScript components
-- [ ] Web Components sandbox (iframe isolation + CSP)
-- [ ] AST validation before saving custom code
-- [ ] Element configuration schema builder
-- [ ] Public marketplace for custom elements
-- [ ] Element versioning and updates
-- [ ] Store custom elements in D1
+### Persona 1: Student Creator (Maria)
+- **Age:** 20, Computer Science student
+- **Goals:** Earn $200-500/month creating templates, build portfolio
+- **Needs:** Easy creation tools, fair revenue share, mentorship
+- **Pain Points:** Limited job opportunities, need flexible schedule
+- **Success Metric:** Template sales generating consistent income
 
-#### Advanced Form Logic
-- [ ] Conditional logic (show/hide fields based on values)
-- [ ] Calculated fields (e.g., auto-calculate totals)
-- [ ] Multi-step/wizard forms
-- [ ] Progress indicators
-- [ ] Save and resume later functionality (store in KV)
-- [ ] Pre-fill fields from URL parameters
+### Persona 2: Small Business Owner (Ahmed)
+- **Age:** 35, Local bakery owner
+- **Goals:** Find affordable, professional templates for customer forms
+- **Needs:** Ready-to-use templates, simple customization, local language support
+- **Pain Points:** High cost of custom development, technical complexity
+- **Success Metric:** Template purchase under $50 solving business need
 
-#### Styling & Branding
-- [ ] Theme editor (colors, fonts, spacing)
-- [ ] CSS injection for advanced customization
-- [ ] White-label options (remove branding)
-- [ ] Custom CSS classes per field
-- [ ] Responsive design preview (mobile/tablet/desktop)
-- [ ] Dark mode support
-
-#### Integrations (Workers Webhooks)
-- [ ] Webhook endpoints (submit, update, delete events)
-- [ ] Workers can send POST to user webhook URLs
-- [ ] Webhook signature verification
-- [ ] Retry logic for failed webhooks
-- [ ] Zapier integration
-- [ ] Google Sheets sync
-- [ ] Airtable sync
-- [ ] Email notifications (Resend, SendGrid)
-- [ ] Slack notifications
+### Persona 3: Educational Institution (Riverdale High)
+- **Needs:** Bulk template licenses for student projects
+- **Goals:** Affordable access for 100+ students
+- **Success Metric:** Cost-effective solution for digital form education
 
 ---
 
-### 2.3 Phase 3 Features (v3.0) - Weeks 11-16
+## 3. Functional Requirements
 
-#### Enterprise Features
-- [ ] SAML/SSO authentication
-- [ ] Audit logs (stored in D1)
-- [ ] Custom data retention policies
-- [ ] Field-level encryption (encrypt in D1)
-- [ ] GDPR compliance tools (data export, deletion)
-- [ ] SLA guarantees (99.99% uptime via Cloudflare)
-- [ ] Custom domains (forms.yourdomain.com)
+### 3.1 Template Marketplace (Core Feature)
 
-#### Advanced Analytics (Durable Objects)
-- [ ] Form completion rates
-- [ ] Time spent per field
-- [ ] Drop-off analysis
-- [ ] A/B testing forms
-- [ ] Conversion funnel visualization
-- [ ] Custom event tracking
-- [ ] Real-time analytics with Durable Objects
+#### 3.1.1 Template Categories
+```javascript
+const templateCategories = {
+  healthcare: {
+    subcategories: ['patient-intake', 'appointment-booking', 'symptom-checker'],
+    complexity: 'high',
+    priceRange: '$29-199',
+    compliance: 'HIPAA'
+  },
+  business: {
+    subcategories: ['lead-generation', 'payment-forms', 'client-onboarding'],
+    complexity: 'medium',
+    priceRange: '$19-99',
+    compliance: 'standard'
+  },
+  education: {
+    subcategories: ['course-registration', 'quiz-assessments', 'feedback'],
+    complexity: 'low-medium',
+    priceRange: '$9-49',
+    compliance: 'FERPA'
+  },
+  events: {
+    subcategories: ['event-registration', 'wedding-rsvp', 'volunteer-coordination'],
+    complexity: 'low',
+    priceRange: '$5-29',
+    compliance: 'standard'
+  },
+  creative: {
+    subcategories: ['interactive-quizzes', 'wedding-planning', 'real-estate'],
+    complexity: 'medium-high',
+    priceRange: '$19-79',
+    compliance: 'standard'
+  }
+};
+```
 
-#### Collaboration (Durable Objects + WebSockets)
-- [ ] Real-time collaborative editing via WebSockets
-- [ ] Comments on forms (stored in D1)
-- [ ] Change history with diffs (stored in D1)
-- [ ] Form approval workflows
-- [ ] Notifications for team updates
+#### 3.1.2 Creator Onboarding System
+- **Student Verification:** Educational email validation or ID verification
+- **Skill Assessment:** Template creation capability test
+- **Mentorship Program:** Pair new creators with experienced mentors
+- **Quality Standards:** Mandatory training on design, accessibility, compliance
+- **Portfolio Building:** Free template creation for skill demonstration
 
-#### Developer Tools
-- [ ] REST API for CRUD operations (Hono routes)
-- [ ] GraphQL API (via Hono middleware)
-- [ ] CLI tool for deployments (Wrangler-based)
-- [ ] Terraform provider for Cloudflare
-- [ ] SDKs for Python, PHP, Ruby
-- [ ] Headless mode (API-only)
-- [ ] OpenAPI spec generation
+#### 3.1.3 Marketplace Features
+- **Template Discovery:** Advanced search with filters (category, price, rating, complexity)
+- **Interactive Previews:** Live demo before purchase
+- **Review System:** Customer ratings and feedback
+- **Recommendation Engine:** Personalized template suggestions
+- **Bundle Purchases:** Multi-template discounts for businesses
+- **Wishlist Functionality:** Save templates for later purchase
+
+### 3.2 Creator Management System
+
+#### 3.2.1 Commission Structure
+| Creator Level | Commission | Requirements | Monthly Cap |
+|---------------|------------|--------------|-------------|
+| **Basic Creator** | 50% | Free account, 1+ templates | $500 |
+| **Pro Creator** | 65% | $199/year, 5+ templates | $2,000 |
+| **Elite Creator** | 73% | 10+ templates, 4.5+ rating | $5,000 |
+| **Featured Creator** | 75% | Invite-only, top 1% performers | $10,000 |
+
+#### 3.2.2 Creator Dashboard
+- **Real-time Analytics:** Sales, views, conversion rates
+- **Payment Tracking:** Earnings, pending payouts, tax documentation
+- **Template Management:** Version control, A/B testing, performance metrics
+- **Marketing Tools:** Promo codes, bundle creation, affiliate links
+- **Support System:** Customer question management, template documentation
+
+#### 3.2.3 Student Employment Tracking
+```javascript
+interface StudentEmploymentMetrics {
+  totalStudentsEmployed: number;
+  averageMonthlyEarnings: number;
+  templatesCreated: number;
+  countriesRepresented: string[];
+  employmentDuration: {
+    averageMonths: number;
+    activeCreators: number;
+  };
+  skillDevelopment: {
+    designSkills: number;
+    technicalSkills: number;
+    businessSkills: number;
+  };
+}
+```
+
+### 3.3 Compliance & Legal System
+
+#### 3.3.1 Data Retention Framework
+- **Automatic Deletion:** TTL-based deletion for non-regulated data
+- **Retention Settings:** Creator-configured retention periods per template
+- **Legal Hold System:** Suspension of auto-deletion for litigation
+- **Compliance Dashboard:** Admin oversight of retention policies
+- **User Rights Portal:** Data access, deletion, and portability requests
+
+#### 3.3.2 Industry-Specific Compliance
+```javascript
+const complianceRequirements = {
+  healthcare: {
+    retentionPeriod: '6+ years',
+    autoDelete: false,
+    requirements: ['HIPAA', 'BAA', 'encryption', 'audit-logs'],
+    verification: 'mandatory'
+  },
+  financial: {
+    retentionPeriod: '7 years',
+    autoDelete: false,
+    requirements: ['SOX', 'PCI-DSS', 'encryption'],
+    verification: 'mandatory'
+  },
+  general: {
+    retentionPeriod: '30-365 days',
+    autoDelete: true,
+    requirements: ['GDPR', 'CCPA', 'disclosure'],
+    verification: 'optional'
+  }
+};
+```
+
+### 3.4 Payment & Revenue System
+
+#### 3.4.1 Pricing Strategy
+- **Freemium Model:** 200+ free templates for lead generation
+- **Student Discounts:** 20% off for verified students
+- **Bulk Pricing:** Volume discounts for educational institutions
+- **Subscription Options:** Monthly template credits for frequent users
+- **Pay-What-You-Want:** Optional pricing for basic templates
+
+#### 3.4.2 Payout System
+- **Payment Processor:** Stripe Connect for global payouts
+- **Payout Schedule:** Net 30 days after purchase
+- **Currency Support:** USD, EUR, GBP, with automatic conversion
+- **Tax Compliance:** 1099-K generation for US creators >$600/year
+- **Minimum Threshold:** $25 for automatic payout, $5 for manual request
 
 ---
 
-## 3. Technical Architecture
+## 4. Non-Functional Requirements
 
-### 3.1 Frontend Stack
-- **Framework:** React 18 + TypeScript
-- **UI Components:** shadcn/ui + Radix UI
-- **Styling:** Tailwind CSS with custom design tokens
-- **Drag-and-Drop:** dnd-kit
-- **Form Handling:** React Hook Form + Zod validation
-- **State Management:** TanStack Query + Zustand
-- **Build Tool:** Vite
-- **Deployment:** Cloudflare Pages (static frontend)
+### 4.1 Performance Requirements
+- **Global Latency:** <50ms form load time worldwide
+- **Template Preview:** <200ms interactive demo loading
+- **Search Performance:** <100ms for marketplace searches
+- **Uptime:** 99.9% availability with automatic failover
+- **Concurrent Users:** Support 10,000+ simultaneous template previews
 
-### 3.2 Backend Stack (Cloudflare Workers)
-- **Runtime:** Cloudflare Workers (V8 isolates)
-- **Framework:** Hono (lightweight, fast, TypeScript-first)
-- **Database:** D1 (SQLite at the edge, globally replicated)
-- **Cache:** Workers KV (low-latency key-value store)
-- **File Storage:** R2 (S3-compatible object storage)
-- **Authentication:** JWT tokens + KV for sessions
-- **Real-time:** Durable Objects + WebSockets (Phase 3)
-- **API:** RESTful via Hono routes
+### 4.2 Security Requirements
+- **Data Encryption:** TLS 1.3 in transit, AES-256 at rest
+- **Payment Security:** PCI-DSS compliant payment processing
+- **Creator Verification:** Identity verification for high-tier creators
+- **Content Security:** Template code validation and sandboxing
+- **Privacy Protection:** Anonymous browsing with opt-in personalization
 
-### 3.3 Database Schema (D1 - SQLite)
+### 4.3 Scalability Requirements
+- **Template Storage:** Auto-scaling KV storage for 1M+ templates
+- **User Growth:** Support 100,000+ student creators
+- **Traffic Handling:** Handle viral template adoption (1000x traffic spikes)
+- **Geographic Distribution:** Localized content delivery in 50+ countries
+- **Cost Optimization:** Maintain <$0.01/template serve cost
 
-#### Core Tables
+### 4.4 Accessibility Requirements
+- **WCAG 2.1 AA:** Full accessibility compliance for all templates
+- **Language Support:** Multi-language template creation and documentation
+- **Assistive Technology:** Screen reader and keyboard navigation support
+- **Cultural Adaptation:** Templates adaptable to local business practices
+- **Low-Bandwidth Optimization:** Templates load on 3G connections
+
+---
+
+## 5. Technical Architecture
+
+### 5.1 Cloudflare Workers Implementation
+```javascript
+// KV Structure for Template Marketplace
+const kvNamespaces = {
+  templates: 'FORMWEAVER_TEMPLATES',      // Template schemas and metadata
+  marketplace: 'FORMWEAVER_MARKETPLACE',  // Sales, reviews, rankings
+  compliance: 'FORMWEAVER_COMPLIANCE',    // Retention policies, legal holds
+  analytics: 'FORMWEAVER_ANALYTICS',      // Creator and template analytics
+  cache: 'FORMWEAVER_CACHE'               // Template previews and search results
+};
+
+// Template Schema Structure
+interface TemplateSchema {
+  id: string;
+  creatorId: string;
+  category: string;
+  price: number;
+  commissionRate: number;
+  title: string;
+  description: string;
+  thumbnail: string;
+  formSchema: object;
+  previewData: object;
+  complianceSettings: {
+    retentionDays: number;
+    autoDelete: boolean;
+    legalBasis: string;
+    industry: string;
+  };
+  metadata: {
+    createdAt: number;
+    updatedAt: number;
+    version: number;
+    downloads: number;
+    rating: number;
+    reviews: number;
+  };
+}
+```
+
+### 5.2 Database Schema (D1)
 ```sql
--- Users
-CREATE TABLE users (
+-- Student Creators
+CREATE TABLE creators (
   id TEXT PRIMARY KEY,
-  email TEXT UNIQUE NOT NULL,
-  password_hash TEXT NOT NULL,
-  name TEXT,
-  email_verified INTEGER DEFAULT 0,
-  created_at INTEGER NOT NULL,
-  updated_at INTEGER NOT NULL
-);
-
-CREATE INDEX idx_users_email ON users(email);
-
--- Workspaces (multi-tenancy)
-CREATE TABLE workspaces (
-  id TEXT PRIMARY KEY,
-  name TEXT NOT NULL,
-  slug TEXT UNIQUE NOT NULL,
-  owner_id TEXT NOT NULL,
-  plan_type TEXT CHECK(plan_type IN ('free', 'pro', 'business', 'enterprise')) DEFAULT 'free',
+  user_id TEXT UNIQUE NOT NULL,
+  student_verification_status TEXT CHECK(status IN ('pending', 'verified', 'rejected')),
+  student_id_file TEXT, -- URL to verification document
   created_at INTEGER NOT NULL,
   updated_at INTEGER NOT NULL,
-  FOREIGN KEY (owner_id) REFERENCES users(id) ON DELETE CASCADE
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-CREATE INDEX idx_workspaces_owner ON workspaces(owner_id);
-CREATE INDEX idx_workspaces_slug ON workspaces(slug);
-
--- Forms
-CREATE TABLE forms (
+-- Template Marketplace
+CREATE TABLE templates (
   id TEXT PRIMARY KEY,
-  workspace_id TEXT NOT NULL,
+  creator_id TEXT NOT NULL,
+  category TEXT NOT NULL,
+  subcategory TEXT,
   title TEXT NOT NULL,
   description TEXT,
-  schema TEXT NOT NULL, -- JSON stored as TEXT
-  status TEXT CHECK(status IN ('draft', 'published', 'archived')) DEFAULT 'draft',
-  version INTEGER DEFAULT 1,
-  created_by TEXT NOT NULL,
+  price_cents INTEGER NOT NULL,
+  commission_rate REAL DEFAULT 0.5,
+  thumbnail_url TEXT,
+  form_schema TEXT NOT NULL,
+  preview_data TEXT,
+  compliance_settings TEXT, -- JSON
+  status TEXT CHECK(status IN ('draft', 'pending_review', 'published', 'suspended')),
   created_at INTEGER NOT NULL,
   updated_at INTEGER NOT NULL,
-  deleted_at INTEGER,
-  FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE,
-  FOREIGN KEY (created_by) REFERENCES users(id)
+  FOREIGN KEY (creator_id) REFERENCES creators(id) ON DELETE CASCADE
 );
 
-CREATE INDEX idx_forms_workspace ON forms(workspace_id, created_at DESC);
-CREATE INDEX idx_forms_status ON forms(workspace_id, status, created_at DESC) WHERE deleted_at IS NULL;
-CREATE INDEX idx_forms_created_by ON forms(created_by);
-
--- Submissions
-CREATE TABLE submissions (
+-- Sales & Commissions
+CREATE TABLE sales (
   id TEXT PRIMARY KEY,
-  form_id TEXT NOT NULL,
-  data TEXT NOT NULL, -- JSON stored as TEXT
-  ip_address TEXT,
-  user_agent TEXT,
-  referrer TEXT,
-  submitted_at INTEGER NOT NULL,
-  FOREIGN KEY (form_id) REFERENCES forms(id) ON DELETE CASCADE
-);
-
-CREATE INDEX idx_submissions_form ON submissions(form_id, submitted_at DESC);
-CREATE INDEX idx_submissions_ip ON submissions(ip_address, submitted_at DESC);
-
--- Custom Elements
-CREATE TABLE custom_elements (
-  id TEXT PRIMARY KEY,
-  workspace_id TEXT NOT NULL,
-  name TEXT NOT NULL,
-  element_id TEXT UNIQUE NOT NULL,
-  code TEXT NOT NULL,
-  config_schema TEXT, -- JSON stored as TEXT
-  is_public INTEGER DEFAULT 0,
-  downloads INTEGER DEFAULT 0,
+  template_id TEXT NOT NULL,
+  buyer_id TEXT NOT NULL,
+  amount_cents INTEGER NOT NULL,
+  creator_earnings_cents INTEGER NOT NULL,
+  platform_fee_cents INTEGER NOT NULL,
+  currency TEXT DEFAULT 'USD',
   created_at INTEGER NOT NULL,
-  updated_at INTEGER NOT NULL,
-  FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+  payout_status TEXT DEFAULT 'pending',
+  FOREIGN KEY (template_id) REFERENCES templates(id),
+  FOREIGN KEY (buyer_id) REFERENCES users(id)
 );
 
-CREATE INDEX idx_custom_elements_workspace ON custom_elements(workspace_id);
-CREATE INDEX idx_custom_elements_public ON custom_elements(is_public, downloads DESC);
-
--- User Roles (for workspace access)
-CREATE TABLE workspace_members (
+-- Compliance & Retention
+CREATE TABLE retention_policies (
   id TEXT PRIMARY KEY,
-  user_id TEXT NOT NULL,
-  workspace_id TEXT NOT NULL,
-  role TEXT CHECK(role IN ('owner', 'admin', 'editor', 'viewer')) DEFAULT 'viewer',
-  invited_at INTEGER NOT NULL,
-  joined_at INTEGER,
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-  FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE,
-  UNIQUE(user_id, workspace_id)
-);
-
-CREATE INDEX idx_workspace_members_user ON workspace_members(user_id);
-CREATE INDEX idx_workspace_members_workspace ON workspace_members(workspace_id);
-
--- Audit Logs (for compliance)
-CREATE TABLE audit_logs (
-  id TEXT PRIMARY KEY,
-  workspace_id TEXT NOT NULL,
-  user_id TEXT NOT NULL,
-  action TEXT NOT NULL,
-  resource_type TEXT NOT NULL,
-  resource_id TEXT NOT NULL,
-  metadata TEXT, -- JSON stored as TEXT
-  ip_address TEXT,
+  template_id TEXT NOT NULL,
+  legal_basis TEXT NOT NULL,
+  retention_days INTEGER NOT NULL,
+  auto_delete BOOLEAN DEFAULT true,
+  notify_before_delete BOOLEAN DEFAULT false,
   created_at INTEGER NOT NULL,
-  FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE,
-  FOREIGN KEY (user_id) REFERENCES users(id)
+  FOREIGN KEY (template_id) REFERENCES templates(id) ON DELETE CASCADE
 );
 
-CREATE INDEX idx_audit_logs_workspace ON audit_logs(workspace_id, created_at DESC);
-CREATE INDEX idx_audit_logs_user ON audit_logs(user_id, created_at DESC);
-```
-
-### 3.4 Workers KV Namespaces
-
-```toml
-# wrangler.toml
-[[kv_namespaces]]
-binding = "FORM_CACHE"
-id = "xxx"
-# Usage: Cache form schemas, 10 min TTL
-
-[[kv_namespaces]]
-binding = "SESSION_STORE"
-id = "xxx"
-# Usage: JWT refresh tokens, 30 day TTL
-
-[[kv_namespaces]]
-binding = "EMAIL_TOKENS"
-id = "xxx"
-# Usage: Email verification, password reset tokens, 24h TTL
-
-[[kv_namespaces]]
-binding = "RATE_LIMIT"
-id = "xxx"
-# Usage: Rate limiting counters, 60s TTL
-```
-
-### 3.5 Security
-
-#### Row-Level Security (D1 Queries)
-```sql
--- All queries check workspace membership
-SELECT * FROM forms 
-WHERE workspace_id IN (
-  SELECT workspace_id 
-  FROM workspace_members 
-  WHERE user_id = ?
+-- Student Employment Metrics
+CREATE TABLE employment_metrics (
+  id TEXT PRIMARY KEY,
+  creator_id TEXT NOT NULL,
+  total_earnings_cents INTEGER DEFAULT 0,
+  total_templates_sold INTEGER DEFAULT 0,
+  average_rating REAL DEFAULT 0,
+  months_active INTEGER DEFAULT 0,
+  last_active_date INTEGER,
+  created_at INTEGER NOT NULL,
+  FOREIGN KEY (creator_id) REFERENCES creators(id) ON DELETE CASCADE
 );
 ```
 
-#### Custom Element Sandboxing
-- **CSP Headers:** `script-src 'self'; object-src 'none';`
-- **iframe Sandbox:** `allow-scripts allow-same-origin`
-- **AST Validation:** Parse custom code, reject malicious patterns
-- **Execution Timeout:** Kill scripts after 10ms CPU time
-
-#### Rate Limiting (Workers KV)
-```typescript
-// 10 submissions per IP per 10 minutes
-const key = `ratelimit:${ip}:${formId}`;
-const count = await env.RATE_LIMIT.get(key);
-if (count && parseInt(count) >= 10) {
-  return c.json({ error: 'Too many requests' }, 429);
-}
-await env.RATE_LIMIT.put(key, String((parseInt(count || '0') + 1)), {
-  expirationTtl: 600
-});
-```
-
-#### Data Encryption
-- **At Rest:** D1 encryption (managed by Cloudflare)
-- **In Transit:** TLS 1.3 (automatic with Workers)
-- **Secrets:** Wrangler secrets (JWT_SECRET, API_KEYS)
-
-#### Input Validation
-- **Client-side:** Zod schemas in React
-- **Server-side:** Zod validation in Hono routes (zValidator middleware)
-- **SQL Injection:** D1 prepared statements only (never string concatenation)
+### 5.3 Frontend Architecture
+- **Framework:** React 18 + TypeScript with Vite
+- **UI Components:** shadcn/ui for consistent, accessible components
+- **State Management:** Zustand for global state, React Query for server state
+- **Form Building:** Custom drag-and-drop system optimized for template creation
+- **Marketplace UI:** Grid-based template browsing with filtering and search
+- **Creator Dashboard:** Analytics-focused interface with real-time updates
 
 ---
 
-## 4. Embedding Architecture
+## 6. Implementation Phases
 
-### 4.1 Embedding Methods
+### Phase 1: Foundation (Weeks 1-8)
+**Objective:** Build core marketplace infrastructure and basic template system
 
-#### Method 1: iframe Embed
-```html
-<iframe 
-  src="https://forms.FormWeaver.app/f/form_abc123?theme=dark"
-  width="100%"
-  height="600"
-  frameborder="0"
-  allow="clipboard-write"
-  sandbox="allow-scripts allow-same-origin allow-forms"
-></iframe>
-```
+#### Core Features
+- [ ] User authentication with student verification
+- [ ] Basic template creation and editing tools
+- [ ] Template marketplace with search and filtering
+- [ ] Creator dashboard with sales tracking
+- [ ] Payment processing with Stripe Connect
+- [ ] Basic compliance framework (30-day auto-delete default)
+- [ ] Mobile-responsive marketplace interface
 
-**Served from:** Cloudflare Workers edge locations (300+)
+#### Technical Infrastructure
+- [ ] Cloudflare Workers API with Hono framework
+- [ ] D1 database with creator and template schemas
+- [ ] Workers KV for template storage and caching
+- [ ] R2 storage for template assets and thumbnails
+- [ ] Rate limiting and security middleware
 
-#### Method 2: JavaScript SDK
-```html
-<script src="https://cdn.FormWeaver.app/sdk.min.js"></script>
-<div id="form-container"></div>
-<script>
-  FormWeaver.render({
-    formId: 'form_abc123',
-    container: '#form-container',
-    apiUrl: 'https://api.FormWeaver.app/v1', // Workers endpoint
-    onSubmit: (data) => console.log(data),
-    theme: 'light'
-  });
-</script>
-```
+#### Success Criteria
+- 50 student creators onboarded
+- 200+ templates in marketplace
+- $5,000+ in student earnings
+- <50ms global form load times
 
-**SDK served from:** Cloudflare Workers CDN with edge caching
+### Phase 2: Marketplace Enhancement (Weeks 9-16)
+**Objective:** Enhance marketplace features and expand creator tools
 
-#### Method 3: React Component
-```jsx
-import { FormWeaverEmbed } from '@FormWeaver/react';
+#### Advanced Features
+- [ ] Advanced template analytics and A/B testing
+- [ ] Template versioning and update system
+- [ ] Customer review and rating system
+- [ ] Bundle creation and bulk pricing
+- [ ] Affiliate program for creators
+- [ ] Video tutorial integration
+- [ ] Template customization options
 
-<FormWeaverEmbed 
-  formId="form_abc123"
-  apiKey="pk_live_..."
-  apiUrl="https://api.FormWeaver.app/v1"
-  onSubmit={(data) => handleSubmit(data)}
-/>
-```
+#### Compliance Expansion
+- [ ] HIPAA-compliant template support
+- [ ] FERPA compliance for education templates
+- [ ] Legal hold system implementation
+- [ ] Advanced retention policy configuration
+- [ ] Automated compliance checking
 
-### 4.2 White-Label Options
-- Custom domain (forms.yourdomain.com) - Via Cloudflare Workers custom domains
-- Remove "Powered by FormWeaver" badge
-- Custom loading screens
-- Custom error messages
-- Custom CSS injection
+#### Success Criteria
+- 200+ student creators active
+- $20,000+ in monthly student earnings
+- 4.0+ average template rating
+- 95% compliance audit pass rate
 
----
+### Phase 3: Scale & Impact (Weeks 17-24)
+**Objective:** Scale globally and maximize student employment impact
 
-## 5. Cloudflare Infrastructure
+#### Global Expansion
+- [ ] Multi-language support (5+ languages)
+- [ ] Localized payment methods
+- [ ] Regional template categories
+- [ ] Educational institution partnerships
+- [ ] Government and NGO template programs
 
-### 5.1 Architecture Diagram
+#### Advanced Features
+- [ ] AI-powered template recommendations
+- [ ] Automated template quality scoring
+- [ ] Advanced creator mentorship matching
+- [ ] Template collaboration tools
+- [ ] Enterprise template licensing
 
-```
-┌─────────────────────────────────────────────┐
-│         Cloudflare Global Network           │
-│         300+ Edge Locations Worldwide       │
-├─────────────────────────────────────────────┤
-│                                             │
-│  ┌─────────────────────────────────────┐   │
-│  │   Cloudflare Pages (Frontend)       │   │
-│  │   - React app (static assets)       │   │
-│  │   - Edge cached (1 year)            │   │
-│  └─────────────────────────────────────┘   │
-│                                             │
-│  ┌─────────────────────────────────────┐   │
-│  │   Cloudflare Workers (Hono API)     │   │
-│  │   - /api/v1/* endpoints             │   │
-│  │   - JWT authentication              │   │
-│  │   - Rate limiting                   │   │
-│  │   - <10ms CPU time per request      │   │
-│  └─────────────────────────────────────┘   │
-│                                             │
-│  ┌─────────────────────────────────────┐   │
-│  │   D1 Database (SQLite at Edge)      │   │
-│  │   - Auto-replicated globally        │   │
-│  │   - <10ms query latency             │   │
-│  │   - Prepared statements only        │   │
-│  └─────────────────────────────────────┘   │
-│                                             │
-│  ┌─────────────────────────────────────┐   │
-│  │   Workers KV (Key-Value Store)      │   │
-│  │   - Form schema cache (10 min)      │   │
-│  │   - Session tokens (30 days)        │   │
-│  │   - Rate limit counters (60s)       │   │
-│  └─────────────────────────────────────┘   │
-│                                             │
-│  ┌─────────────────────────────────────┐   │
-│  │   R2 Storage (Object Storage)       │   │
-│  │   - File uploads                    │   │
-│  │   - CSV/JSON exports                │   │
-│  └─────────────────────────────────────┘   │
-│                                             │
-│  ┌─────────────────────────────────────┐   │
-│  │   Durable Objects (Phase 3)         │   │
-│  │   - WebSocket connections           │   │
-│  │   - Real-time collaboration         │   │
-│  └─────────────────────────────────────┘   │
-│                                             │
-└─────────────────────────────────────────────┘
-           │
-           │ (External integrations)
-           ▼
-    ┌──────────────────┐
-    │  Stripe API      │  (Billing)
-    ├──────────────────┤
-    │  SendGrid/Resend │  (Emails)
-    ├──────────────────┤
-    │  User Webhooks   │  (Integrations)
-    └──────────────────┘
-```
+#### Impact Measurement
+- [ ] Real-time student employment dashboard
+- [ ] Economic impact reporting
+- [ ] Skill development tracking
+- [ ] Success story documentation
 
-### 5.2 Performance Characteristics
-
-| Metric | Target | Cloudflare Reality |
-|--------|--------|-------------------|
-| **API Latency (p50)** | <50ms | ✅ <10ms (edge compute) |
-| **API Latency (p99)** | <200ms | ✅ <50ms (global network) |
-| **Form Load Time** | <500ms | ✅ <200ms (edge cache) |
-| **Uptime** | 99.9% | ✅ 99.99%+ (Cloudflare SLA) |
-| **Global Coverage** | Worldwide | ✅ 300+ edge locations |
-| **Cold Starts** | N/A | ✅ Zero (V8 isolates) |
-
-### 5.3 Scaling Strategy
-
-**Automatic Scaling:**
-- Workers automatically scale to millions of requests
-- D1 auto-replicates to nearest edge locations
-- KV provides global low-latency access
-- No manual scaling configuration needed
-
-**Cost Structure:**
-- Free: 100k requests/day, 25 GB storage
-- Paid: $5/month for 10M requests, scales linearly
-- D1: $0.001 per 1M reads, $5 per 1M writes
-
----
-
-## 6. Monetization Strategy
-
-See `docs/PRICING.md` for detailed pricing tiers.
-
-**Revenue Streams:**
-1. **Subscription fees** (monthly/annual plans)
-2. **Usage overage charges** (submissions, storage)
-3. **Custom element marketplace** (20% commission)
-4. **Professional services** (custom integrations, training)
-5. **Enterprise contracts** (custom SLAs, dedicated support)
-
-**Pricing Based on Cloudflare Costs:**
-- Free tier: Covered by Cloudflare free plan
-- Pro tier: $29/mo (10k submissions, margins >80%)
-- Business tier: $99/mo (100k submissions, margins >85%)
-- Enterprise: Custom (margins >90% due to Cloudflare's economics)
+#### Success Criteria
+- 1,000+ student creators in 20+ countries
+- $100,000+ monthly student earnings
+- 80% creator retention rate
+- Measurable improvement in creator employability
 
 ---
 
 ## 7. Success Metrics
 
-### 7.1 Product Metrics
-- **Activation:** % users who create first form within 7 days (Target: 60%)
-- **Engagement:** Forms created per workspace per month (Target: 5+)
-- **Retention:** % workspaces active month-over-month (Target: 80%)
-- **Conversion:** Free to paid conversion rate (Target: 10%)
+### 7.1 Student Employment Impact
+| Metric | Target | Measurement Method |
+|--------|--------|-------------------|
+| Students Employed | 1,000+ | Creator registrations with verified status |
+| Average Monthly Earnings | $300+ | Sales analytics and payout data |
+| Employment Duration | 6+ months | Creator activity tracking |
+| Skill Development | 80% improvement | Pre/post skill assessments |
+| Job Placement Rate | 30% | Follow-up surveys and LinkedIn tracking |
 
-### 7.2 Technical Metrics (Cloudflare Workers)
-- **Uptime:** 99.99% availability (Cloudflare SLA)
-- **Performance:** Form render time < 200ms (p95)
-- **API Latency:** < 50ms (p99, measured globally)
-- **Error Rate:** < 0.1% of requests
-- **CPU Time:** < 10ms per request (Workers limit: 50ms free, 30s paid)
-- **Cache Hit Rate:** > 80% for form schemas (KV cache)
+### 7.2 Marketplace Health
+| Metric | Target | Measurement Method |
+|--------|--------|-------------------|
+| Template Quality Score | 4.0+ stars | Customer ratings and reviews |
+| Conversion Rate | 15%+ | Visit-to-purchase analytics |
+| Customer Satisfaction | 90%+ | Post-purchase surveys |
+| Template Variety | 1,000+ templates | Inventory tracking |
+| Creator Diversity | 30+ countries | Creator location data |
 
-### 7.3 Business Metrics
-- **MRR:** Monthly Recurring Revenue (Target: $10k by month 3)
-- **CAC:** Customer Acquisition Cost (Target: <$50)
-- **LTV:** Lifetime Value (Target: >$500)
-- **Churn Rate:** < 5% monthly
-- **Gross Margin:** > 85% (Cloudflare's low infrastructure costs)
+### 7.3 Technical Performance
+| Metric | Target | Measurement Method |
+|--------|--------|-------------------|
+| Global Load Time | <50ms | Real user monitoring |
+| Uptime | 99.9% | Cloudflare analytics |
+| Error Rate | <0.1% | Error tracking systems |
+| Mobile Performance | <200ms | Mobile-specific monitoring |
+| Accessibility Score | 100% AA | Automated accessibility testing |
 
----
-
-## 8. Risks & Mitigations
-
-| Risk | Impact | Probability | Mitigation |
-|------|--------|-------------|------------|
-| Custom element security exploits | High | Medium | Strict sandboxing, AST validation, CSP headers |
-| D1 database performance at scale | High | Low | Prepared statements, indexes, KV caching |
-| Cloudflare Workers limits hit | Medium | Low | Monitor CPU time, optimize queries, upgrade plan |
-| Competitor pricing pressure | Medium | High | Focus on edge performance, unique features |
-| GDPR/compliance violations | High | Low | Automated compliance checks, legal review |
-| SDK breaking changes | Medium | Medium | Semantic versioning, deprecation warnings |
-| Cloudflare outage | High | Very Low | Cloudflare 99.99%+ uptime, graceful degradation |
-
-**Cloudflare-Specific Risks:**
-- **D1 Limitations:** Currently in beta, limited to 1GB per database
-  - *Mitigation:* Plan to shard across multiple D1 databases if needed
-- **Workers CPU Limits:** 50ms free tier, 30s paid tier
-  - *Mitigation:* Optimize code, use Durable Objects for long-running tasks
-- **KV Consistency:** Eventually consistent (not immediate)
-  - *Mitigation:* Use D1 for critical data, KV only for caching
+### 7.4 Business Sustainability
+| Metric | Target | Measurement Method |
+|--------|--------|-------------------|
+| Gross Margin | 85%+ | Financial reporting |
+| Customer Acquisition Cost | <$25 | Marketing analytics |
+| Lifetime Value | >$500 | Cohort analysis |
+| Churn Rate | <5% monthly | Subscription analytics |
+| Social Impact ROI | 3:1 | Impact measurement framework |
 
 ---
 
-## 9. Launch Checklist
+## 8. Risk Assessment & Mitigation
 
-### Pre-Launch (2 weeks before)
-- [ ] Complete security audit (OWASP Top 10)
-- [ ] Load testing (10k concurrent users via Workers)
-- [ ] Test D1 query performance (all queries <10ms)
-- [ ] Test KV cache hit rates (>80%)
-- [ ] Documentation complete (API docs, tutorials, FAQs)
-- [ ] Support system ready (help desk, live chat)
-- [ ] Stripe billing integration tested
-- [ ] Marketing site live (on Cloudflare Pages)
-- [ ] Early access user feedback incorporated
-- [ ] Wrangler deployment pipeline tested
-- [ ] Monitoring setup (Workers Analytics, Sentry)
+### 8.1 High-Priority Risks
+| Risk | Impact | Probability | Mitigation Strategy |
+|------|--------|-------------|-------------------|
+| **Creator Quality Control** | High | Medium | Multi-tier verification, mentorship program, quality scoring |
+| **Payment Compliance** | High | Low | Stripe Connect, automated tax reporting, legal review |
+| **Template Copyright Issues** | Medium | Medium | Template review process, plagiarism detection, takedown procedures |
+| **Student Verification Fraud** | Medium | Medium | Multi-factor verification, document validation, IP tracking |
+| **Marketplace Competition** | High | High | Focus on student employment mission, superior commission rates, community building |
 
-### Launch Day
-- [ ] Deploy to production (`wrangler deploy`)
-- [ ] Verify D1 migrations applied
-- [ ] Test all API endpoints in production
-- [ ] Enable Workers Analytics
-- [ ] Enable rate limiting
-- [ ] Announce on Product Hunt, HN, Reddit
-- [ ] Send emails to waitlist
-- [ ] Activate paid ads campaigns
-- [ ] Monitor error rates (target: <0.1%)
+### 8.2 Technical Risks
+| Risk | Impact | Probability | Mitigation Strategy |
+|------|--------|-------------|-------------------|
+| **Cloudflare Service Limits** | Medium | Low | Multi-region deployment, fallback systems, usage monitoring |
+| **Data Privacy Violations** | High | Low | Automated compliance, legal review, privacy-by-design |
+| **Template Security Vulnerabilities** | Medium | Medium | Code validation, sandboxing, regular security audits |
+| **Performance Degradation** | Medium | Medium | CDN optimization, caching strategies, performance monitoring |
 
-### Post-Launch (First 30 days)
-- [ ] Daily monitoring of Workers Analytics
-- [ ] Monitor D1 query performance
-- [ ] Monitor KV cache hit rates
-- [ ] Collect user feedback via in-app surveys
-- [ ] Weekly feature prioritization meetings
-- [ ] Publish 2 case studies
-- [ ] Hit 100 paid workspaces milestone
-- [ ] Optimize slow queries (if any >10ms)
-- [ ] Scale D1 if approaching limits
+### 8.3 Market Risks
+| Risk | Impact | Probability | Mitigation Strategy |
+|------|--------|-------------|-------------------|
+| **Economic Downturn** | High | Medium | Freemium model, essential template categories, cost optimization |
+| **Platform Fatigue** | Medium | High | Continuous innovation, community engagement, creator support |
+| **Regulatory Changes** | Medium | Medium | Legal monitoring, compliance automation, policy adaptation |
+| **Currency Fluctuations** | Medium | Medium | Multi-currency support, hedging strategies, local pricing |
 
 ---
 
-## 10. Appendix
+## 9. Budget & Resource Planning
 
-### 10.1 Competitor Analysis
-- **Typeform:** Strong design, limited extensibility, expensive, slower (no edge)
-- **Jotform:** Feature-rich, dated UI, not embeddable, slower performance
-- **Google Forms:** Free, limited customization, no white-label, no edge
-- **Tally:** Modern, limited enterprise features, no edge compute
-- **Reform:** Developer-focused, lacks no-code interface, no edge
+### 9.1 Development Budget (12 months)
+| Category | Cost | Notes |
+|----------|------|-------|
+| **Development Team** | $240,000 | 2 full-stack developers, 1 designer, 0.5 QA |
+| **Cloud Infrastructure** | $12,000 | Cloudflare, R2, KV, D1 scaling |
+| **Legal & Compliance** | $15,000 | Template reviews, legal framework, contracts |
+| **Marketing & Outreach** | $30,000 | Student recruitment, marketplace promotion |
+| **Creator Support** | $20,000 | Mentorship program, support staff, training |
+| **Contingency (15%)** | $47,550 | Buffer for unexpected costs |
+| **Total** | **$364,550** | |
 
-**Our Edge:** Literally edge computing - <50ms global latency vs 200ms+ for competitors
+### 9.2 Revenue Projections (Year 1)
+| Stream | Q1 | Q2 | Q3 | Q4 | Annual |
+|--------|----|----|----|----|----|
+| **Template Sales (30% platform fee)** | $7,500 | $22,500 | $67,500 | $202,500 | $300,000 |
+| **Pro Creator Subscriptions** | $2,000 | $8,000 | $20,000 | $50,000 | $80,000 |
+| **Enterprise Licenses** | $0 | $5,000 | $15,000 | $35,000 | $55,000 |
+| **Total Revenue** | **$9,500** | **$35,500** | **$102,500** | **$287,500** | **$435,000** |
 
-### 10.2 User Personas
-
-**Persona 1: SaaS Founder (Alex)**
-- Needs FormWeaver for customer feedback in SaaS app
-- Wants white-label solution with fast loading
-- Budget: $50-200/month
-- Technical: Can integrate via API
-- **Pain Point:** Slow form loading hurting conversions
-- **Our Solution:** Edge-first <50ms latency worldwide
-
-**Persona 2: Enterprise Developer (Maya)**
-- Building internal HR portal
-- Requires SAML SSO and audit logs
-- Budget: $500-2000/month
-- Technical: Needs React SDK
-- **Pain Point:** Complex infrastructure management
-- **Our Solution:** Serverless, zero-ops Cloudflare infrastructure
-
-**Persona 3: Agency Owner (Jordan)**
-- Manages 20+ client websites
-- Needs multi-workspace management
-- Budget: $100-500/month
-- Technical: Prefers iframe embeds
-- **Pain Point:** Performance varies by client location
-- **Our Solution:** Global edge network, consistent performance everywhere
-
-### 10.3 Technical References
-- [Cloudflare Workers Docs](https://developers.cloudflare.com/workers/)
-- [Hono Framework](https://hono.dev)
-- [D1 Database Guide](https://developers.cloudflare.com/d1/)
-- [Workers KV](https://developers.cloudflare.com/kv/)
-- [R2 Storage](https://developers.cloudflare.com/r2/)
-- [Durable Objects](https://developers.cloudflare.com/durable-objects/)
-- [Web Components Best Practices](https://web.dev/custom-elements-best-practices/)
-
-### 10.4 Cloudflare Ecosystem Benefits
-- **Cloudflare Pages:** Static frontend hosting
-- **Cloudflare Analytics:** Built-in analytics (privacy-friendly)
-- **Cloudflare Zaraz:** Tag management without performance hit
-- **Cloudflare Turnstile:** Free CAPTCHA alternative
-- **Cloudflare Email Routing:** Email forwarding
-- **Cloudflare Access:** Zero-trust security (Enterprise)
+### 9.3 Student Employment Impact
+| Metric | Q1 | Q2 | Q3 | Q4 | Annual |
+|--------|----|----|----|----|----|
+| **Student Creators** | 50 | 150 | 400 | 1,000 | 1,000 |
+| **Total Student Earnings** | $15,000 | $75,000 | $300,000 | $1,000,000 | $1,390,000 |
+| **Average Monthly Earnings** | $100 | $167 | $250 | $333 | $333 |
+| **Countries Represented** | 10 | 15 | 25 | 35 | 35 |
 
 ---
 
-**Next Review:** 2025-12-16 (monthly cadence)
+## 10. Legal & Compliance Framework
+
+### 10.1 Data Protection Compliance
+- **GDPR Compliance:** Article 5 principles, right to erasure, data portability
+- **CCPA Compliance:** California consumer rights, opt-out mechanisms
+- **International Privacy:** Alignment with global privacy standards
+- **Children's Privacy:** COPPA compliance for under-18 creators with parental consent
+
+### 10.2 Employment Law Considerations
+- **Independent Contractor Status:** Clear creator agreements, tax documentation
+- **Student Work Restrictions:** Compliance with international student work laws
+- **Minimum Wage Equivalent:** Ensure effective earnings meet local standards
+- **Work Hour Limits:** Prevent overwork, promote healthy work-life balance
+
+### 10.3 Intellectual Property Protection
+- **Template Ownership:** Clear IP assignment and licensing terms
+- **Plagiarism Prevention:** Automated detection, manual review process
+- **Copyright Takedown:** DMCA-compliant removal procedures
+- **Creator Rights:** Protect student creators from IP theft
+
+### 10.4 Financial Compliance
+- **Payment Processing:** PCI-DSS compliance, fraud detection
+- **Tax Reporting:** 1099-K generation, international tax compliance
+- **Anti-Money Laundering:** Creator verification, transaction monitoring
+- **Consumer Protection:** Clear refund policies, transparent pricing
+
+---
+
+## 11. Implementation Timeline
+
+### Q1 2024: Foundation Phase
+**January-March: Core Platform Development**
+- Week 1-4: User authentication and student verification
+- Week 5-8: Template creation tools and basic marketplace
+- Week 9-12: Payment integration and creator dashboard
+- Week 13-16: Compliance framework and testing
+
+**Key Milestones:**
+- MVP marketplace launch (Week 12)
+- 50 student creators onboarded (Week 14)
+- $5,000+ student earnings (Week 16)
+
+### Q2 2024: Growth Phase
+**April-June: Marketplace Enhancement**
+- Week 17-20: Advanced analytics and review system
+- Week 21-24: Compliance expansion (HIPAA, FERPA)
+- Week 25-28: Mobile optimization and accessibility
+- Week 29-32: Marketing and creator recruitment
+
+**Key Milestones:**
+- 200+ active creators (Week 28)
+- $20,000+ monthly student earnings (Week 32)
+- 4.0+ average template rating (Week 32)
+
+### Q3-Q4 2024: Scale Phase
+**July-December: Global Expansion**
+- Month 7-9: Internationalization and localization
+- Month 10-12: Enterprise features and partnerships
+- Month 13-16: AI features and advanced analytics
+- Month 17-20: Impact measurement and optimization
+
+**Key Milestones:**
+- 1,000+ creators in 20+ countries (Month 12)
+- $100,000+ monthly student earnings (Month 14)
+- Break-even point achieved (Month 16)
+- Measurable social impact report (Month 20)
+
+---
+
+## 12. Conclusion
+
+This Product Requirements Document establishes FormWeaver as a transformative platform that leverages edge computing technology to create meaningful employment opportunities for students worldwide. By combining a robust template marketplace with fair revenue sharing and comprehensive compliance, we create a sustainable ecosystem that benefits both creators and users.
+
+The student employment focus differentiates FormWeaver from traditional template marketplaces, creating social impact while building a profitable business. The technical architecture leverages Cloudflare's global edge network to deliver superior performance at minimal cost, enabling accessibility for users worldwide.
+
+**Success will be measured not just by financial metrics, but by the number of students empowered, skills developed, and lives improved through meaningful digital work opportunities.**
+
+---
+
+**Next Review:** 2025-12-23 (monthly cadence)  
+**Stakeholder Approval Required:** Product, Engineering, Legal, Social Impact Team

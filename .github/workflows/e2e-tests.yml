@@ -52,12 +52,12 @@ jobs:
       shell: bash
       env:
         NODE_ENV: test
-        JWT_SECRET: ${{ secrets.JWT_SECRET_TEST || 'test-jwt-secret-key-for-e2e-tests' }}
+        JWT_SECRET: ${{ secrets.JWT_SECRET || 'test-jwt-secret-key-for-e2e-tests' }}
         DATABASE_URL: ${{ secrets.DATABASE_URL_TEST || 'file:./test.db' }}
-        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME }}
-        R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-        R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || '' }}
+        R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME || '' }}
+        R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID || '' }}
+        R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY || '' }}
 
     - name: Build frontend
       run: |
@@ -65,8 +65,8 @@ jobs:
         npm run build
       shell: bash
       env:
-        VITE_API_URL: ${{ secrets.VITE_API_URL || 'http://localhost:8787' }}
-        VITE_APP_URL: ${{ secrets.VITE_APP_URL || 'http://localhost:5173' }}
+        VITE_API_URL: ${{ vars.VITE_API_URL || 'http://localhost:8787' }}
+        VITE_APP_URL: ${{ vars.VITE_APP_URL || 'http://localhost:5173' }}
 
     - name: Start backend server
       run: |
@@ -78,12 +78,12 @@ jobs:
       env:
         PORT: 8787
         NODE_ENV: test
-        JWT_SECRET: ${{ secrets.JWT_SECRET_TEST || 'test-jwt-secret-key-for-e2e-tests' }}
+        JWT_SECRET: ${{ secrets.JWT_SECRET || 'test-jwt-secret-key-for-e2e-tests' }}
         DATABASE_URL: ${{ secrets.DATABASE_URL_TEST || 'file:./test.db' }}
-        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME }}
-        R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-        R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || '' }}
+        R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME || '' }}
+        R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID || '' }}
+        R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY || '' }}
 
     - name: Start frontend server
       run: |
@@ -94,8 +94,8 @@ jobs:
       shell: bash
       env:
         PORT: 5173
-        VITE_API_URL: ${{ secrets.VITE_API_URL || 'http://localhost:8787' }}
-        VITE_APP_URL: ${{ secrets.VITE_APP_URL || 'http://localhost:5173' }}
+        VITE_API_URL: ${{ vars.VITE_API_URL || 'http://localhost:8787' }}
+        VITE_APP_URL: ${{ vars.VITE_APP_URL || 'http://localhost:5173' }}
 
     - name: Wait for services to be ready
       run: |
@@ -132,8 +132,8 @@ jobs:
         npm run test:e2e
       shell: bash
       env:
-        VITE_API_URL: ${{ secrets.VITE_API_URL || 'http://localhost:8787' }}
-        VITE_APP_URL: ${{ secrets.VITE_APP_URL || 'http://localhost:5173' }}
+        VITE_API_URL: ${{ vars.VITE_API_URL || 'http://localhost:8787' }}
+        VITE_APP_URL: ${{ vars.VITE_APP_URL || 'http://localhost:5173' }}
         CI: true
 
     - name: Upload test results

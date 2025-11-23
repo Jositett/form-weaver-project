@@ -127,6 +127,128 @@ Start working now. Review the overall progress, determine which component needs 
 
 ---
 
+## 🛒 Marketplace Development Prompt
+
+```markdown
+I'm working on the FormWeaver template marketplace. Continue marketplace development in sprints.
+
+**Your Task:**
+1. Read docs/BACKEND_CHECKLIST.md → "Template Marketplace Backend" section
+2. Read docs/FRONTEND_CHECKLIST.md → "Creator Dashboard Frontend" section
+3. Read docs/DEV_RULES.md → "Marketplace Development Standards" section
+4. Read docs/IMPLEMENTATION_GUIDE.md → "Marketplace Implementation Patterns" section
+5. Determine the highest priority marketplace feature from the checklists
+6. Break it into a 2-3 hour sprint with clear deliverables
+7. Implement following marketplace development standards:
+   - Creator dashboard component architecture
+   - Commission and payout system logic
+   - Template review workflow integration
+   - Student verification system
+8. Run type checks, lint checks, and resolve all errors/warnings
+9. Update both specific checklists and PROGRESS_CHECKLIST.md with marketplace progress
+
+**Marketplace-Specific Requirements:**
+- Implement 50-73% creator commission structure
+- Add student verification with 30% discount system
+- Include legal compliance for data retention (30-90 days)
+- Add creator analytics and earnings tracking
+- Implement template marketplace API endpoints
+
+**Context Files:**
+- docs/BACKEND_CHECKLIST.md - Template marketplace backend tasks
+- docs/FRONTEND_CHECKLIST.md - Creator dashboard frontend tasks
+- docs/DEV_RULES.md - Marketplace development standards
+- docs/IMPLEMENTATION_GUIDE.md - Marketplace implementation patterns
+- docs/POST_MVP_GUIDE.md - Complete marketplace strategy guide
+```
+
+---
+
+## 👨‍🎓 Student Creator Experience Prompt
+
+```markdown
+I'm working on student creator experience features for FormWeaver. Continue student-focused development.
+
+**Your Task:**
+1. Read docs/FRONTEND_CHECKLIST.md → "Student Creator Experience" section
+2. Read docs/DEV_RULES.md → "Student Creator Experience Guidelines" section
+3. Read docs/IMPLEMENTATION_GUIDE.md → "Student Creator Implementation" section
+4. Read docs/POST_MVP_GUIDE.md → "Student Employment Strategy" section
+5. Implement student verification system with multiple methods
+6. Add progressive onboarding flow for new student creators
+7. Implement mentorship program matching and management
+8. Add portfolio building features with analytics
+9. Include educational resource integration
+10. Run type checks, lint checks, and resolve all errors/warnings
+11. Update student creator experience checklist items
+
+**Student-Specific Requirements:**
+- Low-barrier entry with simple verification
+- Educational discounts (30% off) for verified students
+- Mentorship program with algorithmic matching
+- Portfolio building with performance analytics
+- Skill development tracking and gamification
+```
+
+---
+
+## ⚖️ Legal Compliance Development Prompt
+
+```markdown
+I'm working on legal compliance implementation for FormWeaver marketplace. Continue compliance development.
+
+**Your Task:**
+1. Read docs/DEV_RULES.md → "Legal Compliance Development Requirements" section
+2. Read docs/IMPLEMENTATION_GUIDE.md → "Legal Compliance Implementation" section
+3. Read docs/POST_MVP_GUIDE.md → "Legal Compliance Framework" section
+4. Implement data retention system with 30-90 day TTL
+5. Add automatic deletion with legal hold support
+6. Implement GDPR compliance features:
+   - Right to erasure (30-day processing)
+   - Data portability export
+   - Consent management
+7. Add industry-specific compliance (HIPAA, SOX)
+8. Implement audit logging and compliance dashboard
+9. Run type checks, lint checks, and resolve all errors/warnings
+10. Update legal compliance checklist items
+
+**Compliance-Specific Requirements:**
+- Automatic data deletion with configurable retention periods
+- Legal hold system for litigation scenarios
+- GDPR compliance with user rights implementation
+- Industry-specific requirements for healthcare/financial forms
+- Comprehensive audit trails and compliance monitoring
+```
+
+---
+
+## 📊 Creator Dashboard Development Prompt
+
+```markdown
+I'm working on the creator dashboard for FormWeaver marketplace. Continue dashboard development.
+
+**Your Task:**
+1. Read docs/FRONTEND_CHECKLIST.md → "Creator Dashboard" section
+2. Read docs/BACKEND_CHECKLIST.md → "Creator Management API" section
+3. Read docs/DEV_RULES.md → "Creator Experience Standards" section
+4. Implement creator analytics with real-time data
+5. Add earnings tracking with multi-revenue streams
+6. Implement template management with versioning
+7. Add review and rating system with fraud detection
+8. Include creator community features
+9. Run type checks, lint checks, and resolve all errors/warnings
+10. Update creator dashboard checklist items
+
+**Dashboard-Specific Requirements:**
+- Real-time analytics with caching strategies
+- Earnings tracking with commission calculations
+- Template management with approval workflows
+- Creator community with collaboration tools
+- Mobile-responsive design for all creator features
+```
+
+---
+
 ## 🛠️ Utility Prompts
 
 These prompts are for specific, non-sprint tasks like code quality checks or project synchronization.
@@ -170,6 +292,42 @@ Examples:
 ```
 
 Otherwise, the agent will autonomously follow the checklist priority order.
+
+---
+
+## 📚 Context Files
+
+### **Core Documentation**
+
+- **PROJECT_RULES.md** - Coding standards and architecture (primary guide)
+- **docs/PROGRESS_CHECKLIST.md** - Overall project status and sprint tracking
+- **docs/BACKEND_CHECKLIST.md** - Backend development tasks and requirements
+- **docs/FRONTEND_CHECKLIST.md** - Frontend development tasks and requirements
+- **docs/DEV_RULES.md** - Development standards and best practices
+- **docs/IMPLEMENTATION_GUIDE.md** - Implementation patterns and technical guidance
+
+### **Marketplace & Strategy Documentation**
+
+- **docs/POST_MVP_GUIDE.md** - Complete marketplace strategy and legal compliance framework
+- **docs/PRICING.md** - Pricing strategy and template categorization
+- **docs/BACKEND.md** - Backend architecture and API documentation
+- **docs/QUALITY_ASSURANCE.md** - Quality standards and testing procedures
+
+### **Setup & Configuration**
+
+- **frontend/README.md** - Frontend architecture and development setup
+- **backend/README.md** - Backend architecture, R2 setup, and secrets management
+- **docs/ENVIRONMENT_SETUP.md** - Development environment configuration
+- **docs/TESTING.md** - Testing strategies and procedures
+
+### **Additional Resources**
+
+- **docs/HOW_TO_CONTINUE_WORK.md** - Detailed sprint-based development instructions
+- **docs/SPRINT_SUMMARY_2025-11-22.md** - Recent sprint accomplishments and learnings
+- **docs/WRANGLER_GUIDE.md** - Cloudflare Workers configuration and deployment
+- **docs/CACHE_STRATEGY.md** - Caching strategies and KV optimization plans
+
+**Note:** For marketplace development, prioritize reading POST_MVP_GUIDE.md first to understand the comprehensive strategy before diving into implementation checklists.
 
 ---
 
